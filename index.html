@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Breath Aurora · Breathwork, Badges & Streaks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div class="app-brand">
+        <div class="brand-icon">🌀</div>
+        <div class="brand-text">
+          <h1>Breath Aurora</h1>
+          <p>Breathwork, mudras & movement · Ancient + modern</p>
+        </div>
+      </div>
+
+      <div class="app-profile-switcher">
+        <label for="profileSelect" class="label-small">Profile</label>
+        <div class="profile-select-row">
+          <select id="profileSelect"></select>
+          <button id="newProfileBtn" class="btn btn-ghost" title="Create new profile">＋</button>
+        </div>
+        <div id="profileTagline" class="profile-tagline"></div>
+      </div>
+    </header>
+
+    <nav class="app-nav">
+      <button class="nav-btn active" data-view="coachView">Coach</button>
+      <button class="nav-btn" data-view="libraryView">Library</button>
+      <button class="nav-btn" data-view="profileView">Profile</button>
+    </nav>
+
+    <main class="app-main">
+      <!-- COACH VIEW -->
+      <section id="coachView" class="view view-active">
+        <div class="coach-layout">
+          <div class="coach-left">
+            <h2 class="section-title">Breath Session</h2>
+
+            <div class="card">
+              <label class="field-label" for="techniqueSelect">Technique</label>
+              <select id="techniqueSelect" class="field-select"></select>
+              <div id="techniqueTags" class="chip-row"></div>
+              <p id="techniqueShort" class="text-muted small"></p>
+            </div>
+
+            <div class="card card-grid">
+              <div>
+                <label class="field-label" for="roundsInput">Rounds / Cycles</label>
+                <input id="roundsInput" type="number" min="1" max="20" value="6" class="field-input" />
+                <p id="estimatedTime" class="small text-muted"></p>
+              </div>
+              <div>
+                <label class="field-label">Session type</label>
+                <div class="chip-row">
+                  <button data-intent="calm" class="chip chip-toggle chip-active">Calm</button>
+                  <button data-intent="focus" class="chip chip-toggle">Focus</button>
+                  <button data-intent="energy" class="chip chip-toggle">Energy</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="card coach-metrics">
+              <div class="metric">
+                <span class="metric-label">Current phase</span>
+                <span id="phaseLabel" class="metric-value">—</span>
+              </div>
+              <div class="metric">
+                <span class="metric-label">Phase time left</span>
+                <span id="phaseCountdown" class="metric-value">00.0 s</span>
+              </div>
+              <div class="metric">
+                <span class="metric-label">Session progress</span>
+                <span id="sessionProgressText" class="metric-value">0%</span>
+              </div>
+            </div>
+
+            <div class="coach-controls">
+              <button id="startBtn" class="btn btn-primary">Start session</button>
+              <button id="stopBtn" class="btn btn-soft" disabled>Stop</button>
+              <label class="toggle">
+                <input id="soundToggle" type="checkbox" checked />
+                <span class="toggle-indicator"></span>
+                <span class="toggle-label">Phase chime</span>
+              </label>
+            </div>
+
+            <div class="card card-tips">
+              <p class="small text-muted">
+                Tip: Sit comfortably, spine tall, shoulders soft. You can rest hands in
+                <strong>Gyan Mudra</strong> (thumb + index) or on your heart while you breathe.
+              </p>
+            </div>
+          </div>
+
+          <div class="coach-right">
+            <div class="breath-visual-card card">
+              <h2 class="section-title">Guided Breath</h2>
+
+              <div class="breath-circle-wrapper">
+                <svg class="breath-circle" viewBox="0 0 120 120">
+                  <defs>
+                    <radialGradient id="breathGradient" cx="50%" cy="50%" r="60%">
+                      <stop offset="0%" stop-color="#e5f2ff" />
+                      <stop offset="60%" stop-color="#38bdf8" />
+                      <stop offset="100%" stop-color="#0f172a" />
+                    </radialGradient>
+                  </defs>
+                  <circle class="breath-circle-bg" cx="60" cy="60" r="54" />
+                  <circle class="breath-circle-progress" cx="60" cy="60" r="54" />
+                </svg>
+                <div class="breath-circle-center">
+                  <div id="phaseMainLabel" class="phase-main-label">Ready</div>
+                  <div id="phaseSubLabel" class="phase-sub-label">Press start to begin</div>
+                </div>
+              </div>
+
+              <div class="breath-helper-row">
+                <div>
+                  <span class="helper-label">Breathing style</span>
+                  <span id="breathStyleLabel" class="helper-value">—</span>
+                </div>
+                <div>
+                  <span class="helper-label">Today’s minutes</span>
+                  <span id="todayMinutesLabel" class="helper-value">0 min</span>
+                </div>
+              </div>
+
+              <div class="breath-legend-row small">
+                <span class="dot dot-inhale"></span> Inhale
+                <span class="dot dot-hold"></span> Hold
+                <span class="dot dot-exhale"></span> Exhale
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- LIBRARY VIEW -->
+      <section id="libraryView" class="view">
+        <h2 class="section-title">Technique Library</h2>
+        <p class="text-muted small">
+          Short, clear descriptions of each technique. Start with the gentle ones. Hyperventilation-style
+          practices (Wim Hof, Holotropic, etc.) should always be done responsibly and never in water.
+        </p>
+        <div id="techLibrary" class="library-grid"></div>
+      </section>
+
+      <!-- PROFILE VIEW -->
+      <section id="profileView" class="view">
+        <div class="profile-layout">
+          <div class="card">
+            <h2 class="section-title">Stats & Streaks</h2>
+            <div class="stats-grid">
+              <div class="stat-item">
+                <span class="stat-label">Current streak</span>
+                <span id="statCurrentStreak" class="stat-value">0 days</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Best streak</span>
+                <span id="statBestStreak" class="stat-value">0 days</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Total sessions</span>
+                <span id="statTotalSessions" class="stat-value">0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Total minutes</span>
+                <span id="statTotalMinutes" class="stat-value">0</span>
+              </div>
+            </div>
+
+            <div class="streak-bar">
+              <div id="streakFill" class="streak-bar-fill"></div>
+            </div>
+            <p id="streakHint" class="small text-muted">
+              Breathe at least once per day to keep your streak glowing.
+            </p>
+          </div>
+
+          <div class="card">
+            <h2 class="section-title">Badges</h2>
+            <div id="badgeGrid" class="badge-grid"></div>
+          </div>
+
+          <div class="card">
+            <h2 class="section-title">Daily Note (local only)</h2>
+            <textarea id="dailyNote" class="field-textarea" rows="4"
+              placeholder="How do you feel after today’s breathing? This stays on your device."></textarea>
+            <button id="saveNoteBtn" class="btn btn-soft btn-small">Save note</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer small">
+      <span>Breath Aurora · All data stored locally in your browser.</span>
+      <span>Built for mindful, non-shaming breath practice.</span>
+    </footer>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
