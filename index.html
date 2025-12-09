@@ -12,25 +12,29 @@
       <div class="app-brand">
         <div class="brand-icon">🌀</div>
         <div class="brand-text">
-          <h1>Breath Aurora</h1>
-          <p>Breathwork, mudras & movement · Ancient + modern</p>
+          <h1 data-i18n="title">Breath Aurora</h1>
+          <p data-i18n="tagline">Breathwork, mudras & movement · Ancient + modern</p>
         </div>
       </div>
 
       <div class="app-profile-switcher">
-        <label for="profileSelect" class="label-small">Profile</label>
+        <label for="profileSelect" class="label-small" data-i18n="profileLabel">Profile</label>
         <div class="profile-select-row">
           <select id="profileSelect"></select>
           <button id="newProfileBtn" class="btn btn-ghost" title="Create new profile">＋</button>
         </div>
         <div id="profileTagline" class="profile-tagline"></div>
       </div>
+
+      <div class="lang-toggle" aria-label="Language toggle">
+        <button id="langToggle" class="btn btn-soft btn-small" type="button">TR / EN</button>
+      </div>
     </header>
 
     <nav class="app-nav">
-      <button class="nav-btn active" data-view="coachView">Coach</button>
-      <button class="nav-btn" data-view="libraryView">Library</button>
-      <button class="nav-btn" data-view="profileView">Profile</button>
+      <button class="nav-btn active" data-view="coachView" data-i18n="navCoach">Coach</button>
+      <button class="nav-btn" data-view="libraryView" data-i18n="navLibrary">Library</button>
+      <button class="nav-btn" data-view="profileView" data-i18n="navProfile">Profile</button>
     </nav>
 
     <main class="app-main">
@@ -38,10 +42,10 @@
       <section id="coachView" class="view view-active">
         <div class="coach-layout">
           <div class="coach-left">
-            <h2 class="section-title">Breath Session</h2>
+            <h2 class="section-title" data-i18n="sessionHeading">Breath Session</h2>
 
             <div class="card">
-              <label class="field-label" for="techniqueSelect">Technique</label>
+              <label class="field-label" for="techniqueSelect" data-i18n="techniqueLabel">Technique</label>
               <select id="techniqueSelect" class="field-select"></select>
               <div id="techniqueTags" class="chip-row"></div>
               <p id="techniqueShort" class="text-muted small"></p>
@@ -49,42 +53,43 @@
 
             <div class="card card-grid">
               <div>
-                <label class="field-label" for="roundsInput">Rounds / Cycles</label>
+                <label class="field-label" for="roundsInput" data-i18n="roundsLabel">Rounds / Cycles</label>
                 <input id="roundsInput" type="number" min="1" max="20" value="6" class="field-input" />
                 <p id="estimatedTime" class="small text-muted"></p>
               </div>
               <div>
-                <label class="field-label">Session type</label>
+                <label class="field-label" data-i18n="sessionTypeLabel">Session type</label>
                 <div class="chip-row">
-                  <button data-intent="calm" class="chip chip-toggle chip-active">Calm</button>
-                  <button data-intent="focus" class="chip chip-toggle">Focus</button>
-                  <button data-intent="energy" class="chip chip-toggle">Energy</button>
+                  <button data-intent="calm" class="chip chip-toggle chip-active" data-i18n="intentCalm">Calm</button>
+                  <button data-intent="focus" class="chip chip-toggle" data-i18n="intentFocus">Focus</button>
+                  <button data-intent="energize" class="chip chip-toggle" data-i18n="intentEnergize">Energize</button>
+                  <button data-intent="sleep" class="chip chip-toggle" data-i18n="intentSleep">Sleep</button>
                 </div>
               </div>
             </div>
 
             <div class="card coach-metrics">
               <div class="metric">
-                <span class="metric-label">Current phase</span>
+                <span class="metric-label" data-i18n="metricPhase">Current phase</span>
                 <span id="phaseLabel" class="metric-value">—</span>
               </div>
               <div class="metric">
-                <span class="metric-label">Phase time left</span>
+                <span class="metric-label" data-i18n="metricTime">Phase time left</span>
                 <span id="phaseCountdown" class="metric-value">00.0 s</span>
               </div>
               <div class="metric">
-                <span class="metric-label">Session progress</span>
+                <span class="metric-label" data-i18n="metricProgress">Session progress</span>
                 <span id="sessionProgressText" class="metric-value">0%</span>
               </div>
             </div>
 
             <div class="coach-controls">
-              <button id="startBtn" class="btn btn-primary">Start session</button>
-              <button id="stopBtn" class="btn btn-soft" disabled>Stop</button>
+              <button id="startBtn" class="btn btn-primary" data-i18n="startBtn">Start session</button>
+              <button id="stopBtn" class="btn btn-soft" disabled data-i18n="stopBtn">Stop</button>
               <label class="toggle">
                 <input id="soundToggle" type="checkbox" checked />
                 <span class="toggle-indicator"></span>
-                <span class="toggle-label">Phase chime</span>
+                <span class="toggle-label" data-i18n="soundToggle">Phase chime</span>
               </label>
             </div>
 
@@ -98,33 +103,24 @@
 
           <div class="coach-right">
             <div class="breath-visual-card card">
-              <h2 class="section-title">Guided Breath</h2>
+              <h2 class="section-title" data-i18n="guidedBreath">Guided Breath</h2>
 
               <div class="breath-circle-wrapper">
-                <svg class="breath-circle" viewBox="0 0 120 120">
-                  <defs>
-                    <radialGradient id="breathGradient" cx="50%" cy="50%" r="60%">
-                      <stop offset="0%" stop-color="#e5f2ff" />
-                      <stop offset="60%" stop-color="#38bdf8" />
-                      <stop offset="100%" stop-color="#0f172a" />
-                    </radialGradient>
-                  </defs>
-                  <circle class="breath-circle-bg" cx="60" cy="60" r="54" />
-                  <circle class="breath-circle-progress" cx="60" cy="60" r="54" />
-                </svg>
-                <div class="breath-circle-center">
-                  <div id="phaseMainLabel" class="phase-main-label">Ready</div>
-                  <div id="phaseSubLabel" class="phase-sub-label">Press start to begin</div>
+                <div class="breath-circle" id="breathCircle" data-phase="idle" data-session-type="calm">
+                  <button class="breath-core" id="breathCoreButton" type="button" aria-label="Ready. Tap to start.">
+                    <div class="breath-core-label" id="breathCoreLabel">Ready</div>
+                    <div class="breath-core-sub" id="breathCoreSub">Tap to begin</div>
+                  </button>
                 </div>
               </div>
 
               <div class="breath-helper-row">
                 <div>
-                  <span class="helper-label">Breathing style</span>
+                  <span class="helper-label" data-i18n="breathStyle">Breathing style</span>
                   <span id="breathStyleLabel" class="helper-value">—</span>
                 </div>
                 <div>
-                  <span class="helper-label">Today’s minutes</span>
+                  <span class="helper-label" data-i18n="todayMinutes">Today’s minutes</span>
                   <span id="todayMinutesLabel" class="helper-value">0 min</span>
                 </div>
               </div>
@@ -141,34 +137,37 @@
 
       <!-- LIBRARY VIEW -->
       <section id="libraryView" class="view">
-        <h2 class="section-title">Technique Library</h2>
-        <p class="text-muted small">
+        <h2 class="section-title" data-i18n="libraryHeading">Technique Library</h2>
+        <p class="text-muted small" data-i18n="libraryIntro">
           Short, clear descriptions of each technique. Start with the gentle ones. Hyperventilation-style
           practices (Wim Hof, Holotropic, etc.) should always be done responsibly and never in water.
         </p>
-        <div id="techLibrary" class="library-grid"></div>
+        <div class="library-layout">
+          <div id="techLibrary" class="library-grid"></div>
+          <div id="libraryDetail" class="card library-detail" aria-live="polite"></div>
+        </div>
       </section>
 
       <!-- PROFILE VIEW -->
       <section id="profileView" class="view">
         <div class="profile-layout">
           <div class="card">
-            <h2 class="section-title">Stats & Streaks</h2>
+            <h2 class="section-title" data-i18n="statsHeading">Stats & Streaks</h2>
             <div class="stats-grid">
               <div class="stat-item">
-                <span class="stat-label">Current streak</span>
+                <span class="stat-label" data-i18n="currentStreak">Current streak</span>
                 <span id="statCurrentStreak" class="stat-value">0 days</span>
               </div>
               <div class="stat-item">
-                <span class="stat-label">Best streak</span>
+                <span class="stat-label" data-i18n="bestStreak">Best streak</span>
                 <span id="statBestStreak" class="stat-value">0 days</span>
               </div>
               <div class="stat-item">
-                <span class="stat-label">Total sessions</span>
+                <span class="stat-label" data-i18n="totalSessions">Total sessions</span>
                 <span id="statTotalSessions" class="stat-value">0</span>
               </div>
               <div class="stat-item">
-                <span class="stat-label">Total minutes</span>
+                <span class="stat-label" data-i18n="totalMinutes">Total minutes</span>
                 <span id="statTotalMinutes" class="stat-value">0</span>
               </div>
             </div>
@@ -182,15 +181,15 @@
           </div>
 
           <div class="card">
-            <h2 class="section-title">Badges</h2>
+            <h2 class="section-title" data-i18n="badgesHeading">Badges</h2>
             <div id="badgeGrid" class="badge-grid"></div>
           </div>
 
           <div class="card">
-            <h2 class="section-title">Daily Note (local only)</h2>
+            <h2 class="section-title" data-i18n="noteHeading">Daily Note (local only)</h2>
             <textarea id="dailyNote" class="field-textarea" rows="4"
               placeholder="How do you feel after today’s breathing? This stays on your device."></textarea>
-            <button id="saveNoteBtn" class="btn btn-soft btn-small">Save note</button>
+            <button id="saveNoteBtn" class="btn btn-soft btn-small" data-i18n="saveNote">Save note</button>
           </div>
         </div>
       </section>
@@ -201,6 +200,12 @@
       <span>Built for mindful, non-shaming breath practice.</span>
     </footer>
   </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <audio id="soundInhale" preload="auto"></audio>
+  <audio id="soundHold" preload="auto"></audio>
+  <audio id="soundExhale" preload="auto"></audio>
 
   <script src="script.js" defer></script>
 </body>
