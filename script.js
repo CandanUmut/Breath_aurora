@@ -234,6 +234,10 @@
   const STORAGE_KEY = "breathAuroraProfiles";
   const SOUND_PREF_KEY = "breathAurora_soundEnabled";
   const LANG_KEY = "breathAurora_lang";
+  const ACTIVE_PROFILE_KEY = "breathAurora_activeProfileId";
+
+  let setActiveView = () => {};
+  let currentView = "coach";
 
   const DEFAULT_BADGES = [
     {
@@ -303,12 +307,26 @@
     return `${y}-${m}-${day}`;
   }
 
+  function ensureAvatarDefaults(profile) {
+    if (!profile.avatar) {
+      profile.avatar = {
+        color: "teal",
+        accent: "yellow",
+        shape: "circle",
+      };
+    }
+    return profile;
+  }
+
   function loadProfiles() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const obj = JSON.parse(raw);
-        if (obj && typeof obj === "object") return obj;
+        if (obj && typeof obj === "object") {
+          Object.values(obj).forEach(ensureAvatarDefaults);
+          return obj;
+        }
       }
     } catch {}
     const guest = {
@@ -323,6 +341,7 @@
       flags: {},
       notesByDate: {},
       typeCounts: {},
+      avatar: { color: "teal", accent: "yellow", shape: "circle" },
     };
     const profiles = { Guest: guest };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(profiles));
@@ -334,15 +353,15 @@
   }
 
   let profiles = loadProfiles();
-  let currentProfileName = Object.keys(profiles)[0] || "Guest";
+  let currentProfileId = null;
 
   function getCurrentProfile() {
-    return profiles[currentProfileName];
+    return profiles[currentProfileId];
   }
 
   function ensureProfile(name) {
     if (!profiles[name]) {
-      profiles[name] = {
+      profiles[name] = ensureAvatarDefaults({
         name,
         createdAt: todayKey(),
         lastPracticeDate: null,
@@ -354,9 +373,21 @@
         flags: {},
         notesByDate: {},
         typeCounts: {},
-      };
+      });
     }
+    ensureAvatarDefaults(profiles[name]);
     return profiles[name];
+  }
+
+  function setCurrentProfile(profileId) {
+    if (!profiles[profileId]) return;
+    currentProfileId = profileId;
+    localStorage.setItem(ACTIVE_PROFILE_KEY, profileId);
+    const sel = $("#profileSelect");
+    if (sel) sel.value = profileId;
+    $("#profileTagline").textContent = `${profileId}, your breath is your superpower.`;
+    refreshProfileUI();
+    renderAvatar();
   }
 
   function showToast(message) {
@@ -413,6 +444,7 @@
 
   function recordSession(durationMinutes, sessionType) {
     const profile = getCurrentProfile();
+    if (!profile) return;
     const today = todayKey();
     const yesterday = yesterdayKey();
 
@@ -480,20 +512,34 @@
   const breathCoreLabel = $("#breathCoreLabel");
   const breathCoreSub = $("#breathCoreSub");
 
-  let sessionState = {
-    status: "idle", // idle | countdown | running | paused | finished
+  const sessionEngine = {
     sessionType: "calm",
     pattern: { ...SESSION_TYPES.calm.pattern },
     phases: [],
     phaseIndex: 0,
     phaseStartTime: 0,
     phaseEndTime: 0,
-    countdownValue: 0,
     sessionDurationMs: 0,
     startedAt: 0,
     pausedRemainingMs: 0,
     timerId: null,
   };
+
+  let sessionState = "idle"; // idle | countdown | running | paused | finished
+  let countdownValue = 0;
+  let currentPhase = "idle";
+  let remainingSeconds = 0;
+
+  const coachTechTitle = document.getElementById("coachTechTitle");
+  const coachTechPattern = document.getElementById("coachTechPattern");
+  const coachTechSummary = document.getElementById("coachTechSummary");
+  const coachTechWhy = document.getElementById("coachTechWhy");
+  let currentTechnique = null;
+  const avatarShapeEl = document.getElementById("avatarShape");
+  const avatarInnerEl = document.getElementById("avatarInner");
+  const colorSwatches = document.querySelectorAll(".avatar-color-swatch");
+  const accentSwatches = document.querySelectorAll(".avatar-accent-swatch");
+  const shapeButtons = document.querySelectorAll(".avatar-shape-btn");
 
   let currentLocale = localStorage.getItem(LANG_KEY) || "en";
 
@@ -507,7 +553,7 @@
     const type = SESSION_TYPES[typeId] || SESSION_TYPES.calm;
     const root = document.documentElement;
     const circle = breathCircle;
-    const phase = sessionState.phases[sessionState.phaseIndex]?.type || "idle";
+    const phase = sessionEngine.phases[sessionEngine.phaseIndex]?.type || "idle";
     const colors = type.colors;
     const colorForPhase = colors[phase] || colors.inhale;
     root.style.setProperty("--phase-color", colorForPhase);
@@ -553,26 +599,55 @@
     return phases.filter((p) => p.duration > 0);
   }
 
-  function setCoreText(main, sub) {
-    breathCoreLabel.textContent = main;
-    breathCoreSub.textContent = sub;
-    breathCoreButton.setAttribute("aria-label", `${main}. ${sub}`);
+  function updateCoreButtonUI() {
+    if (!breathCoreButton) return;
+    breathCoreButton.classList.remove("is-paused", "is-running");
+    const readyLabel = currentLocale === "tr" ? "Hazır" : "Ready";
+    const readySub = currentLocale === "tr" ? "Başlamak için dokun" : "Tap to begin";
+    const countdownSub = currentLocale === "tr" ? "Hazırlan" : "Get ready";
+    const pausedLabel = currentLocale === "tr" ? "Duraklatıldı" : "Paused";
+    const pausedSub = currentLocale === "tr" ? "Devam etmek için dokun" : "Tap to resume";
+    const pauseHint = currentLocale === "tr" ? "Duraklatmak için dokun" : "Tap to pause";
+
+    if (sessionState === "idle" || sessionState === "finished") {
+      breathCoreLabel.textContent = readyLabel;
+      breathCoreSub.textContent = readySub;
+    } else if (sessionState === "countdown") {
+      breathCoreLabel.textContent = String(countdownValue || 0);
+      breathCoreSub.textContent = countdownSub;
+    } else if (sessionState === "running") {
+      breathCoreLabel.textContent = (currentPhase || "").toUpperCase();
+      breathCoreSub.textContent = `${Math.max(0, Math.ceil(remainingSeconds || 0))}s · ${pauseHint}`;
+      breathCoreButton.classList.add("is-running");
+    } else if (sessionState === "paused") {
+      breathCoreLabel.textContent = pausedLabel;
+      breathCoreSub.textContent = pausedSub;
+      breathCoreButton.classList.add("is-paused");
+    }
+
+    breathCoreButton.setAttribute(
+      "aria-label",
+      `${breathCoreLabel.textContent}. ${breathCoreSub.textContent}`
+    );
   }
 
   function resetToReady() {
-    sessionState.status = "idle";
-    sessionState.phaseIndex = 0;
-    sessionState.phases = [];
-    sessionState.sessionDurationMs = 0;
-    sessionState.pausedRemainingMs = 0;
+    sessionState = "idle";
+    sessionEngine.phaseIndex = 0;
+    sessionEngine.phases = [];
+    sessionEngine.sessionDurationMs = 0;
+    sessionEngine.pausedRemainingMs = 0;
+    countdownValue = 0;
+    currentPhase = "idle";
+    remainingSeconds = 0;
     updateProgress(0);
     breathCircle.dataset.phase = "idle";
-    setCoreText(currentLocale === "tr" ? "Hazır" : "Ready", currentLocale === "tr" ? "Başlamak için dokun" : "Tap to begin");
     $("#phaseLabel").textContent = "—";
     $("#phaseCountdown").textContent = "00.0 s";
     $("#sessionProgressText").textContent = "0%";
     $("#startBtn").disabled = false;
     $("#stopBtn").disabled = true;
+    updateCoreButtonUI();
   }
 
   function updatePhaseUI(phase, remaining, overall) {
@@ -592,126 +667,179 @@
     };
 
     labelEl.textContent = phase.label.toUpperCase();
-    setCoreText(phase.label.toUpperCase(), `${Math.ceil(remaining)}s`);
     breathCircle.dataset.phase = phase.type;
     countdownEl.textContent = `${remaining.toFixed(1)} s`;
     progressText.textContent = `${Math.round(overall * 100)}%`;
+    currentPhase = phase.type;
+    remainingSeconds = remaining;
     breathCoreSub.textContent = `${Math.ceil(remaining)}s · ${hints[phase.type]}`;
-    breathCoreButton.setAttribute("aria-label", `${phase.label}. ${Math.ceil(remaining)} seconds remaining. Tap to pause.`);
+    updateCoreButtonUI();
   }
 
   function beginBreathing() {
-    const type = SESSION_TYPES[sessionState.sessionType] || SESSION_TYPES.calm;
+    const type = SESSION_TYPES[sessionEngine.sessionType] || SESSION_TYPES.calm;
     const minutes = Number($("#roundsInput").value) || type.durationMinutes;
-    sessionState.pattern = { ...type.pattern };
-    sessionState.phases = buildPhases(sessionState.pattern, minutes);
-    sessionState.phaseIndex = 0;
-    sessionState.sessionDurationMs =
-      sessionState.phases.reduce((sum, p) => sum + p.duration, 0) * 1000;
-    sessionState.startedAt = performance.now();
-    sessionState.status = "running";
-    const first = sessionState.phases[0];
+    sessionEngine.pattern = { ...type.pattern };
+    sessionEngine.phases = buildPhases(sessionEngine.pattern, minutes);
+    sessionEngine.phaseIndex = 0;
+    sessionEngine.sessionDurationMs =
+      sessionEngine.phases.reduce((sum, p) => sum + p.duration, 0) * 1000;
+    sessionEngine.startedAt = performance.now();
+    sessionState = "running";
+    const first = sessionEngine.phases[0];
     const now = performance.now();
-    sessionState.phaseStartTime = now;
-    sessionState.phaseEndTime = now + (first.duration || 1) * 1000;
+    sessionEngine.phaseStartTime = now;
+    sessionEngine.phaseEndTime = now + (first.duration || 1) * 1000;
+    currentPhase = first.type;
+    remainingSeconds = first.duration;
     $("#startBtn").disabled = true;
     $("#stopBtn").disabled = false;
     playPhaseSound(first.type);
+    updateCoreButtonUI();
     tickSession();
   }
 
   function startCountdown() {
-    if (sessionState.status === "running") return;
-    sessionState.status = "countdown";
-    sessionState.countdownValue = 3;
-    setCoreText("3", currentLocale === "tr" ? "Hazırlan" : "Get ready");
+    if (sessionState === "running") return;
+    sessionState = "countdown";
+    countdownValue = 3;
+    updateCoreButtonUI();
     const interval = setInterval(() => {
-      if (sessionState.status !== "countdown") {
+      if (sessionState !== "countdown") {
         clearInterval(interval);
         return;
       }
-      sessionState.countdownValue -= 1;
-      if (sessionState.countdownValue <= 0) {
+      countdownValue -= 1;
+      if (countdownValue <= 0) {
         clearInterval(interval);
-        setCoreText("Go", currentLocale === "tr" ? "Başla" : "Begin");
         beginBreathing();
         return;
       }
-      setCoreText(String(sessionState.countdownValue), currentLocale === "tr" ? "Hazırlan" : "Get ready");
+      updateCoreButtonUI();
     }, 1000);
   }
 
   function pauseSession() {
-    if (sessionState.status !== "running") return;
-    sessionState.status = "paused";
-    sessionState.pausedRemainingMs = sessionState.phaseEndTime - performance.now();
-    setCoreText(currentLocale === "tr" ? "Duraklatıldı" : "Paused", currentLocale === "tr" ? "Devam etmek için dokun" : "Tap to resume");
-    if (sessionState.timerId) cancelAnimationFrame(sessionState.timerId);
+    if (sessionState !== "running") return;
+    sessionState = "paused";
+    sessionEngine.pausedRemainingMs = sessionEngine.phaseEndTime - performance.now();
+    if (sessionEngine.timerId) cancelAnimationFrame(sessionEngine.timerId);
+    updateCoreButtonUI();
   }
 
   function resumeSession() {
-    if (sessionState.status !== "paused") return;
+    if (sessionState !== "paused") return;
     const now = performance.now();
-    const phase = sessionState.phases[sessionState.phaseIndex];
+    const phase = sessionEngine.phases[sessionEngine.phaseIndex];
     const phaseDurationMs = (phase?.duration || 0) * 1000;
-    const elapsed = Math.max(0, phaseDurationMs - sessionState.pausedRemainingMs);
-    sessionState.phaseStartTime = now - elapsed;
-    sessionState.phaseEndTime = now + sessionState.pausedRemainingMs;
-    sessionState.status = "running";
-    sessionState.pausedRemainingMs = 0;
+    const elapsed = Math.max(0, phaseDurationMs - sessionEngine.pausedRemainingMs);
+    sessionEngine.phaseStartTime = now - elapsed;
+    sessionEngine.phaseEndTime = now + sessionEngine.pausedRemainingMs;
+    sessionState = "running";
+    sessionEngine.pausedRemainingMs = 0;
+    updateCoreButtonUI();
     tickSession();
   }
 
   function stopSession(completed) {
-    if (sessionState.timerId) cancelAnimationFrame(sessionState.timerId);
-    sessionState.timerId = null;
-    if (completed && sessionState.sessionDurationMs > 0) {
-      const minutes = Math.max(1, Math.round(sessionState.sessionDurationMs / 1000 / 60));
-      recordSession(minutes, sessionState.sessionType);
+    if (sessionEngine.timerId) cancelAnimationFrame(sessionEngine.timerId);
+    sessionEngine.timerId = null;
+    if (completed && sessionEngine.sessionDurationMs > 0) {
+      const minutes = Math.max(1, Math.round(sessionEngine.sessionDurationMs / 1000 / 60));
+      recordSession(minutes, sessionEngine.sessionType);
     }
     resetToReady();
-    sessionState.status = completed ? "finished" : "idle";
+    sessionState = completed ? "finished" : "idle";
+    updateCoreButtonUI();
   }
 
   function tickSession() {
-    if (sessionState.status !== "running") return;
+    if (sessionState !== "running") return;
     const now = performance.now();
-    const phase = sessionState.phases[sessionState.phaseIndex];
+    const phase = sessionEngine.phases[sessionEngine.phaseIndex];
     if (!phase) {
       stopSession(true);
       return;
     }
 
-    const remainingMs = sessionState.phaseEndTime - now;
+    const remainingMs = sessionEngine.phaseEndTime - now;
     if (remainingMs <= 0) {
-      sessionState.phaseIndex += 1;
-      const next = sessionState.phases[sessionState.phaseIndex];
+      sessionEngine.phaseIndex += 1;
+      const next = sessionEngine.phases[sessionEngine.phaseIndex];
       if (!next) {
         stopSession(true);
         return;
       }
-      sessionState.phaseStartTime = now;
-      sessionState.phaseEndTime = now + next.duration * 1000;
+      sessionEngine.phaseStartTime = now;
+      sessionEngine.phaseEndTime = now + next.duration * 1000;
+      currentPhase = next.type;
+      remainingSeconds = next.duration;
       playPhaseSound(next.type);
-      applyTheme(sessionState.sessionType);
+      applyTheme(sessionEngine.sessionType);
     }
 
-    const current = sessionState.phases[sessionState.phaseIndex];
-    const phaseElapsed = now - sessionState.phaseStartTime;
+    const current = sessionEngine.phases[sessionEngine.phaseIndex];
+    const phaseElapsed = now - sessionEngine.phaseStartTime;
     const phaseDuration = current.duration * 1000;
     const phaseRemaining = Math.max(0, (phaseDuration - phaseElapsed) / 1000);
-    const elapsedTotal = now - sessionState.startedAt;
-    const overallProgress = Math.min(1, elapsedTotal / sessionState.sessionDurationMs);
+    const elapsedTotal = now - sessionEngine.startedAt;
+    const overallProgress = Math.min(1, elapsedTotal / sessionEngine.sessionDurationMs);
     const phaseProgress = Math.max(0, Math.min(1, phaseElapsed / phaseDuration));
 
     updateProgress(phaseProgress);
     updatePhaseUI(current, phaseRemaining, overallProgress);
-    applyTheme(sessionState.sessionType);
+    applyTheme(sessionEngine.sessionType);
 
-    sessionState.timerId = requestAnimationFrame(tickSession);
+    sessionEngine.timerId = requestAnimationFrame(tickSession);
   }
 
   // Library + UI helpers
+
+  function renderCoachTechniqueInfo() {
+    if (!currentTechnique) {
+      if (coachTechTitle) coachTechTitle.textContent = "Choose a technique";
+      if (coachTechPattern) coachTechPattern.textContent = "";
+      if (coachTechSummary)
+        coachTechSummary.textContent = "Pick a session type or a technique from the library to see details.";
+      if (coachTechWhy) coachTechWhy.textContent = "";
+      return;
+    }
+
+    const pat = currentTechnique.pattern || {};
+    const inhale = pat.inhale ?? "-";
+    const hold = (pat.hold ?? pat.holdFull ?? 0) || 0;
+    const exhale = pat.exhale ?? "-";
+
+    if (coachTechTitle) coachTechTitle.textContent = currentTechnique.label || currentTechnique.name || "Custom Session";
+    if (coachTechPattern)
+      coachTechPattern.textContent = `Pattern: Inhale ${inhale}s · ${hold ? `Hold ${hold}s · ` : ""}Exhale ${exhale}s`;
+    if (coachTechSummary) coachTechSummary.textContent = currentTechnique.summary || "";
+    if (coachTechWhy) coachTechWhy.textContent = currentTechnique.whyItWorks || "";
+  }
+
+  function useTechnique(techMeta) {
+    if (!techMeta) return;
+    currentTechnique = techMeta;
+    $("#breathStyleLabel").textContent = techMeta.summary || "";
+    $("#techniqueShort").textContent = techMeta.summary || "";
+    const tagsContainer = $("#techniqueTags");
+    tagsContainer.innerHTML = "";
+    [techMeta.level, techMeta.sessionType].forEach((tag) => {
+      const span = document.createElement("span");
+      span.className = "chip chip-primary";
+      span.textContent = tag;
+      tagsContainer.appendChild(span);
+    });
+    sessionEngine.sessionType = techMeta.sessionType;
+    sessionEngine.pattern = { ...techMeta.pattern };
+    $$(".chip-toggle").forEach((chip) => {
+      chip.classList.toggle("chip-active", chip.getAttribute("data-intent") === techMeta.sessionType);
+    });
+    applyTheme(sessionEngine.sessionType);
+    updateEstimatedTime();
+    renderCoachTechniqueInfo();
+  }
+
   function initTechniqueSelect() {
     const sel = $("#techniqueSelect");
     sel.innerHTML = "";
@@ -728,29 +856,13 @@
   function refreshTechniqueInfo() {
     const techId = $("#techniqueSelect").value;
     const tech = BREATH_LIBRARY.find((t) => t.id === techId) || BREATH_LIBRARY[0];
-    $("#breathStyleLabel").textContent = tech.summary;
-    $("#techniqueShort").textContent = tech.summary;
-    const tagsContainer = $("#techniqueTags");
-    tagsContainer.innerHTML = "";
-    [tech.level, tech.sessionType].forEach((tag) => {
-      const span = document.createElement("span");
-      span.className = "chip chip-primary";
-      span.textContent = tag;
-      tagsContainer.appendChild(span);
-    });
-    sessionState.sessionType = tech.sessionType;
-    sessionState.pattern = { ...tech.pattern };
-    $$(".chip-toggle").forEach((chip) => {
-      chip.classList.toggle("chip-active", chip.getAttribute("data-intent") === tech.sessionType);
-    });
-    applyTheme(sessionState.sessionType);
-    updateEstimatedTime();
+    useTechnique(tech);
   }
 
   function updateEstimatedTime() {
-    const type = SESSION_TYPES[sessionState.sessionType];
+    const type = SESSION_TYPES[sessionEngine.sessionType];
     const minutes = Number($("#roundsInput").value) || type.durationMinutes;
-    const pattern = sessionState.pattern || type.pattern;
+    const pattern = sessionEngine.pattern || type.pattern;
     const cycleSeconds = patternCycleSeconds(pattern);
     const cycles = Math.ceil((minutes * 60) / cycleSeconds);
     const estText = minutes < 1 ? `${Math.round(minutes * 60)} sec` : `${minutes.toFixed(1)} min`;
@@ -784,7 +896,14 @@
     container.addEventListener("click", (e) => {
       const detailId = e.target.getAttribute("data-view-detail");
       const startId = e.target.getAttribute("data-start-tech");
-      if (detailId) renderDetail(detailId);
+      if (detailId) {
+        renderDetail(detailId);
+        const tech = BREATH_LIBRARY.find((t) => t.id === detailId);
+        if (tech) {
+          $("#techniqueSelect").value = tech.id;
+          useTechnique(tech);
+        }
+      }
       if (startId) startFromLibrary(startId);
     });
 
@@ -820,12 +939,9 @@
     if (!tech) return;
     $("#techniqueSelect").value = tech.id;
     $("#roundsInput").value = SESSION_TYPES[tech.sessionType].durationMinutes;
-    sessionState.sessionType = tech.sessionType;
-    sessionState.pattern = { ...tech.pattern };
-    applyTheme(sessionState.sessionType);
-    switchView("coachView");
-    refreshTechniqueInfo();
-    setCoreText(currentLocale === "tr" ? "Hazır" : "Ready", currentLocale === "tr" ? "Başlamak için dokun" : "Tap to begin");
+    useTechnique(tech);
+    setActiveView("coach");
+    resetToReady();
   }
 
   function initProfilesUI() {
@@ -837,14 +953,15 @@
       opt.textContent = name;
       sel.appendChild(opt);
     });
-    sel.value = currentProfileName;
-    $("#profileTagline").textContent = `${currentProfileName}, your breath is your superpower.`;
-    refreshProfileUI();
+    const firstProfile = Object.keys(profiles)[0];
+    const targetProfile = currentProfileId && profiles[currentProfileId] ? currentProfileId : firstProfile;
+    if (targetProfile) setCurrentProfile(targetProfile);
   }
 
   function refreshProfileUI() {
     const profile = getCurrentProfile();
     if (!profile) return;
+    ensureAvatarDefaults(profile);
     $("#statCurrentStreak").textContent = `${profile.currentStreak || 0} days`;
     $("#statBestStreak").textContent = `${profile.bestStreak || 0} days`;
     $("#statTotalSessions").textContent = profile.totalSessions || 0;
@@ -884,6 +1001,41 @@
     $("#todayMinutesLabel").textContent = `${profile.totalMinutes || 0} min`;
   }
 
+  function renderAvatar() {
+    const profile = getCurrentProfile();
+    if (!profile) return;
+    ensureAvatarDefaults(profile);
+
+    const { color, accent, shape } = profile.avatar;
+
+    if (avatarShapeEl) avatarShapeEl.dataset.shape = shape;
+
+    const colorMap = {
+      teal: "#14b8a6",
+      blue: "#3b82f6",
+      purple: "#a855f7",
+      amber: "#f59e0b",
+    };
+    const accentMap = {
+      yellow: "#facc15",
+      pink: "#ec4899",
+      lime: "#84cc16",
+      sky: "#0ea5e9",
+    };
+
+    const baseColor = colorMap[color] || "#38bdf8";
+    const accentColor = accentMap[accent] || "#facc15";
+
+    if (avatarInnerEl) {
+      avatarInnerEl.style.background = `radial-gradient(circle at top, ${accentColor}, ${baseColor})`;
+      avatarInnerEl.style.boxShadow = `0 0 24px ${baseColor}80`;
+    }
+
+    colorSwatches.forEach((s) => s.classList.toggle("is-active", s.dataset.color === color));
+    accentSwatches.forEach((s) => s.classList.toggle("is-active", s.dataset.accent === accent));
+    shapeButtons.forEach((btn) => btn.classList.toggle("avatar-shape-btn--active", btn.dataset.shape === shape));
+  }
+
   function applyLocale(lang) {
     currentLocale = lang;
     localStorage.setItem(LANG_KEY, lang);
@@ -896,19 +1048,50 @@
     refreshTechniqueInfo();
   }
 
-  function switchView(viewId) {
-    $$(".view").forEach((v) => v.classList.remove("view-active"));
-    $(`#${viewId}`).classList.add("view-active");
-    $$(".nav-btn").forEach((b) => b.classList.remove("active"));
-    $(`.nav-btn[data-view="${viewId}"]`).classList.add("active");
-  }
-
   document.addEventListener("DOMContentLoaded", () => {
+    const VIEWS = {
+      coach: document.getElementById("view-coach"),
+      library: document.getElementById("view-library"),
+      profile: document.getElementById("view-profile"),
+    };
+
+    const navButtons = document.querySelectorAll(".nav-btn[data-view-target]");
+
+    setActiveView = (target) => {
+      if (!VIEWS[target]) return;
+      currentView = target;
+      Object.entries(VIEWS).forEach(([id, el]) => {
+        if (!el) return;
+        el.classList.toggle("view--active", id === target);
+      });
+
+      navButtons.forEach((btn) => {
+        const isActive = btn.dataset.viewTarget === target;
+        btn.classList.toggle("nav-btn--active", isActive);
+      });
+    };
+
+    navButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = btn.dataset.viewTarget;
+        setActiveView(target);
+        if (target === "profile") {
+          renderAvatar();
+        }
+      });
+    });
+
+    const savedProfileId = localStorage.getItem(ACTIVE_PROFILE_KEY);
+    if (savedProfileId && profiles[savedProfileId]) {
+      currentProfileId = savedProfileId;
+    }
+
     initTechniqueSelect();
     initLibrary();
     initProfilesUI();
-    applyTheme(sessionState.sessionType);
+    applyTheme(sessionEngine.sessionType);
     applyLocale(currentLocale);
+    setActiveView("coach");
 
     $("#roundsInput").addEventListener("input", updateEstimatedTime);
     $("#techniqueSelect").addEventListener("change", refreshTechniqueInfo);
@@ -917,10 +1100,11 @@
       chip.addEventListener("click", () => {
         $$(".chip-toggle").forEach((c) => c.classList.remove("chip-active"));
         chip.classList.add("chip-active");
-        sessionState.sessionType = chip.getAttribute("data-intent");
-        sessionState.pattern = { ...SESSION_TYPES[sessionState.sessionType].pattern };
-        applyTheme(sessionState.sessionType);
+        sessionEngine.sessionType = chip.getAttribute("data-intent");
+        sessionEngine.pattern = { ...SESSION_TYPES[sessionEngine.sessionType].pattern };
+        applyTheme(sessionEngine.sessionType);
         updateEstimatedTime();
+        renderCoachTechniqueInfo();
       });
     });
 
@@ -928,11 +1112,11 @@
     $("#stopBtn").addEventListener("click", () => stopSession(false));
 
     breathCoreButton.addEventListener("click", () => {
-      if (sessionState.status === "idle" || sessionState.status === "finished") {
+      if (sessionState === "idle" || sessionState === "finished") {
         startCountdown();
-      } else if (sessionState.status === "running") {
+      } else if (sessionState === "running") {
         pauseSession();
-      } else if (sessionState.status === "paused") {
+      } else if (sessionState === "paused") {
         resumeSession();
       }
     });
@@ -943,9 +1127,7 @@
     });
 
     $("#profileSelect").addEventListener("change", (e) => {
-      currentProfileName = e.target.value;
-      $("#profileTagline").textContent = `${currentProfileName}, your breath is your superpower.`;
-      refreshProfileUI();
+      setCurrentProfile(e.target.value);
     });
 
     $("#newProfileBtn").addEventListener("click", () => {
@@ -955,8 +1137,41 @@
       if (!trimmed) return;
       ensureProfile(trimmed);
       saveProfiles(profiles);
-      currentProfileName = trimmed;
+      setCurrentProfile(trimmed);
       initProfilesUI();
+    });
+
+    colorSwatches.forEach((swatch) => {
+      swatch.addEventListener("click", () => {
+        const profile = getCurrentProfile();
+        if (!profile) return;
+        ensureAvatarDefaults(profile);
+        profile.avatar.color = swatch.dataset.color;
+        saveProfiles(profiles);
+        renderAvatar();
+      });
+    });
+
+    accentSwatches.forEach((swatch) => {
+      swatch.addEventListener("click", () => {
+        const profile = getCurrentProfile();
+        if (!profile) return;
+        ensureAvatarDefaults(profile);
+        profile.avatar.accent = swatch.dataset.accent;
+        saveProfiles(profiles);
+        renderAvatar();
+      });
+    });
+
+    shapeButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const profile = getCurrentProfile();
+        if (!profile) return;
+        ensureAvatarDefaults(profile);
+        profile.avatar.shape = btn.dataset.shape;
+        saveProfiles(profiles);
+        renderAvatar();
+      });
     });
 
     $("#saveNoteBtn").addEventListener("click", () => {

@@ -32,14 +32,14 @@
     </header>
 
     <nav class="app-nav">
-      <button class="nav-btn active" data-view="coachView" data-i18n="navCoach">Coach</button>
-      <button class="nav-btn" data-view="libraryView" data-i18n="navLibrary">Library</button>
-      <button class="nav-btn" data-view="profileView" data-i18n="navProfile">Profile</button>
+      <button class="nav-btn nav-btn--active" data-view-target="coach" id="navCoach" data-i18n="navCoach">Coach</button>
+      <button class="nav-btn" data-view-target="library" id="navLibrary" data-i18n="navLibrary">Library</button>
+      <button class="nav-btn" data-view-target="profile" id="navProfile" data-i18n="navProfile">Profile</button>
     </nav>
 
     <main class="app-main">
       <!-- COACH VIEW -->
-      <section id="coachView" class="view view-active">
+      <section id="view-coach" class="view view--active">
         <div class="coach-layout">
           <div class="coach-left">
             <h2 class="section-title" data-i18n="sessionHeading">Breath Session</h2>
@@ -132,11 +132,19 @@
               </div>
             </div>
           </div>
+          <section class="coach-info card">
+            <div class="coach-tech-title" id="coachTechTitle">Choose a technique</div>
+            <div class="coach-tech-pattern" id="coachTechPattern"></div>
+            <p class="coach-tech-summary" id="coachTechSummary">
+              Pick a session type or a technique from the library to see details.
+            </p>
+            <p class="coach-tech-why" id="coachTechWhy"></p>
+          </section>
         </div>
       </section>
 
       <!-- LIBRARY VIEW -->
-      <section id="libraryView" class="view">
+      <section id="view-library" class="view">
         <h2 class="section-title" data-i18n="libraryHeading">Technique Library</h2>
         <p class="text-muted small" data-i18n="libraryIntro">
           Short, clear descriptions of each technique. Start with the gentle ones. Hyperventilation-style
@@ -149,7 +157,7 @@
       </section>
 
       <!-- PROFILE VIEW -->
-      <section id="profileView" class="view">
+      <section id="view-profile" class="view">
         <div class="profile-layout">
           <div class="card">
             <h2 class="section-title" data-i18n="statsHeading">Stats & Streaks</h2>
@@ -183,6 +191,45 @@
           <div class="card">
             <h2 class="section-title" data-i18n="badgesHeading">Badges</h2>
             <div id="badgeGrid" class="badge-grid"></div>
+          </div>
+
+          <div class="profile-card">
+            <div class="avatar-preview">
+              <div class="avatar-shape" id="avatarShape" data-shape="circle">
+                <div class="avatar-inner" id="avatarInner"></div>
+              </div>
+            </div>
+
+            <div class="avatar-controls">
+              <div class="avatar-control-group">
+                <label>Primary color</label>
+                <div class="avatar-color-row">
+                  <button type="button" class="avatar-color-swatch" data-color="teal"></button>
+                  <button type="button" class="avatar-color-swatch" data-color="blue"></button>
+                  <button type="button" class="avatar-color-swatch" data-color="purple"></button>
+                  <button type="button" class="avatar-color-swatch" data-color="amber"></button>
+                </div>
+              </div>
+
+              <div class="avatar-control-group">
+                <label>Accent color</label>
+                <div class="avatar-color-row">
+                  <button type="button" class="avatar-accent-swatch" data-accent="yellow"></button>
+                  <button type="button" class="avatar-accent-swatch" data-accent="pink"></button>
+                  <button type="button" class="avatar-accent-swatch" data-accent="lime"></button>
+                  <button type="button" class="avatar-accent-swatch" data-accent="sky"></button>
+                </div>
+              </div>
+
+              <div class="avatar-control-group">
+                <label>Shape</label>
+                <div class="avatar-shape-row">
+                  <button type="button" class="avatar-shape-btn" data-shape="circle">Circle</button>
+                  <button type="button" class="avatar-shape-btn" data-shape="diamond">Diamond</button>
+                  <button type="button" class="avatar-shape-btn" data-shape="hex">Hex</button>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="card">
