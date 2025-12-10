@@ -66,9 +66,11 @@
       label: "Coherent Breathing · 5-5 Rhythm",
       sessionType: "calm",
       pattern: { inhale: 5, hold: 0, exhale: 5 },
+      defaultCycles: 6,
       level: "Beginner",
       summary:
         "Slow nasal breathing at about 5 breaths per minute to calm the nervous system.",
+      summaryTr: "Sinir sistemini sakinleştirmek için dakikada ~5 nefeslik nazal ritim.",
       howTo: [
         "Sit or lie down comfortably.",
         "Inhale through your nose for 5 seconds, letting your belly rise.",
@@ -77,17 +79,23 @@
       ],
       whyItWorks:
         "This pace creates a resonance between your breath and heart, boosting heart-rate variability and activating the vagus nerve.",
+      whyTr:
+        "Bu ritim nefes ve kalp arasında uyum oluşturur, kalp atım değişkenliğini artırır ve vagus sinirini uyarır.",
       cautions:
         "Very gentle and safe for most people. If you feel any air hunger, slightly shorten the inhale and exhale counts.",
+      cautionsTr:
+        "Genellikle güvenli ve yumuşaktır. Hava açlığı hissederseniz süreleri biraz kısaltın.",
     },
     {
       id: "box",
       label: "Box Breathing · 4-4-4-4",
       sessionType: "focus",
       pattern: { inhale: 4, hold: 4, exhale: 4, holdEmpty: 4 },
+      defaultCycles: 8,
       level: "Beginner",
       summary:
         "A simple 4-count inhale, hold, exhale, hold cycle used by Navy SEALs to stay calm and focused.",
+      summaryTr: "Sakin ve odaklı kalmak için 4 sayıda alma, tutma, verme ve boşta tutma döngüsü.",
       howTo: [
         "Inhale through your nose for 4 counts.",
         "Hold your breath with lungs full for 4 counts.",
@@ -96,17 +104,23 @@
       ],
       whyItWorks:
         "The short breath holds allow CO₂ to rise slightly, which activates the vagus nerve and helps slow your heart and clear your mind.",
+      whyTr:
+        "Kısa nefes tutmalar CO₂'yi hafifçe yükseltir, vagus sinirini uyarır ve kalbi yavaşlatıp zihni berraklaştırır.",
       cautions:
         "If holding for 4 is difficult, start with shorter counts (like 3-3-3-3) and build up.",
+      cautionsTr:
+        "4 sayıda tutmak zor gelirse 3-3-3-3 ile başlayıp kademeli artırın.",
     },
     {
       id: "sleep_478",
       label: "4-7-8 Sleep Breath",
       sessionType: "sleep",
       pattern: { inhale: 4, hold: 7, exhale: 8 },
+      defaultCycles: 6,
       level: "Beginner",
       summary:
         "A longer exhale pattern that helps switch your body into rest-and-digest mode for sleep.",
+      summaryTr: "Vücudu uyku moduna geçirmek için uzun verişe sahip rahatlatıcı ritim.",
       howTo: [
         "Inhale quietly through your nose for 4 counts.",
         "Hold your breath for 7 counts.",
@@ -115,17 +129,23 @@
       ],
       whyItWorks:
         "The long exhale and breath hold strongly activate the parasympathetic nervous system and reduce arousal.",
+      whyTr:
+        "Uzun veriş ve tutuş parasempatik sistemi güçlü biçimde aktive eder, uyarılmayı düşürür.",
       cautions:
         "If 7-second holds feel too long, start with a 4-4-6 pattern and gradually increase.",
+      cautionsTr:
+        "7 saniye tutmak zor gelirse 4-4-6 ile başlayıp yavaşça uzatın.",
     },
     {
       id: "bhramari",
       label: "Bhramari · Humming Bee Breath",
       sessionType: "calm",
       pattern: { inhale: 4, hold: 0, exhale: 6 },
+      defaultCycles: 8,
       level: "Beginner",
       summary:
         "A gentle humming exhale that soothes the nervous system and quiets the mind.",
+      summaryTr: "Sinir sistemini yumuşatan hafif uğultulu veriş.",
       howTo: [
         "Inhale slowly through your nose.",
         "Exhale while making a soft 'mmm' humming sound, like a bee.",
@@ -134,16 +154,21 @@
       ],
       whyItWorks:
         "The humming vibration stimulates the vagus nerve and increases nitric oxide in the nasal passages.",
+      whyTr:
+        "Uğultu, vagus sinirini uyarır ve burun yollarında nitrik oksiti artırır.",
       cautions:
         "Keep the volume comfortable. If you feel any ear discomfort, hum more softly.",
+      cautionsTr: "Sesi rahat seviyede tutun. Kulakta rahatsızlık olursa daha yumuşak mırıldanın.",
     },
     {
       id: "energize_simple",
       label: "Sunrise Energizer · 2-0-4",
       sessionType: "energize",
       pattern: { inhale: 2, hold: 0, exhale: 4 },
+      defaultCycles: 12,
       level: "Beginner",
       summary: "Short inhales and longer exhales to gently wake up and boost alertness.",
+      summaryTr: "Kısa alış ve uzun verişlerle nazikçe uyanıp dikkati artırma.",
       howTo: [
         "Sit upright.",
         "Inhale through the nose for 2 counts.",
@@ -152,7 +177,47 @@
       ],
       whyItWorks:
         "A slightly extended exhale balances the nervous system while the brisk inhale lifts energy.",
+      whyTr: "Biraz uzun veriş sinir sistemini dengeler, hızlı alış enerjiyi yükseltir.",
       cautions: "If you feel lightheaded, slow down and return to normal breathing.",
+      cautionsTr: "Baş dönmesi olursa yavaşlayıp normal nefese dönün.",
+    },
+    {
+      id: "lung-3-3-6",
+      label: "Lung Expansion 3-3-6",
+      sessionType: "calm",
+      pattern: { inhale: 3, hold: 3, exhale: 6 },
+      defaultCycles: 10,
+      level: "Gentle",
+      summary: "Smooth breaths with a brief hold to gently stretch lung tissue and lengthen the exhale.",
+      summaryTr: "Akciğerleri nazikçe genişletmek ve verişi uzatmak için kısa tutuşlu akış.",
+      howTo: [
+        "Inhale through the nose for 3 counts, expanding ribs.",
+        "Hold lightly for 3 counts without strain.",
+        "Exhale for 6 counts, soft jaw and shoulders.",
+      ],
+      whyItWorks: "Short holds allow gentle CO₂ rise that improves tolerance and lung elasticity.",
+      whyTr: "Kısa tutuşlar CO₂ toleransını artırır ve akciğer esnekliğini destekler.",
+      cautions: "Stay relaxed; skip holds if dizzy.",
+      cautionsTr: "Rahat kalın; baş dönmesi olursa tutuşları atlayın.",
+    },
+    {
+      id: "lung-4-4-8",
+      label: "Lung Expansion 4-4-8",
+      sessionType: "focus",
+      pattern: { inhale: 4, hold: 4, exhale: 8 },
+      defaultCycles: 8,
+      level: "Intermediate",
+      summary: "A balanced inhale and hold with twice-as-long exhale for deeper capacity training.",
+      summaryTr: "Daha derin kapasite için dengeli alış ve tutuş, iki kat uzun veriş.",
+      howTo: [
+        "Inhale steadily for 4 counts, filling low ribs first.",
+        "Hold gently for 4 without clenching the throat.",
+        "Exhale for 8 counts, feeling the ribs wrap in.",
+      ],
+      whyItWorks: "Long exhales train the diaphragm eccentrically and calm the nervous system.",
+      whyTr: "Uzun veriş diyaframı güçlendirir ve sinir sistemini yatıştırır.",
+      cautions: "Reduce the hold if breath hunger appears.",
+      cautionsTr: "Nefes açlığı olursa tutuş süresini azaltın.",
     },
   ];
 
@@ -165,6 +230,8 @@
       navLibrary: "Library",
       navProfile: "Profile",
       sessionHeading: "Breath Session",
+      cyclesLabel: "Cycles",
+      totalTime: "Total time",
       techniqueLabel: "Technique",
       roundsLabel: "Rounds / Cycles",
       sessionTypeLabel: "Session type",
@@ -181,9 +248,20 @@
       guidedBreath: "Guided Breath",
       breathStyle: "Breathing style",
       todayMinutes: "Today’s minutes",
+      ready: "Ready",
+      tapBegin: "Tap to begin",
+      tapPause: "Tap to pause",
+      tapResume: "Tap to resume",
+      paused: "Paused",
+      howTo: "How to practice",
+      whyItWorks: "Why it works",
+      caution: "Caution",
+      chooseTechnique: "Choose a technique",
+      chooseTechniqueSub: "Pick a session type or a technique from the library to see details.",
       libraryHeading: "Technique Library",
       libraryIntro:
         "Short, clear descriptions of each technique. Start with the gentle ones. Hyperventilation-style practices should be done responsibly.",
+      libraryUse: "Use this technique",
       statsHeading: "Stats & Streaks",
       currentStreak: "Current streak",
       bestStreak: "Best streak",
@@ -192,6 +270,11 @@
       badgesHeading: "Badges",
       noteHeading: "Daily Note (local only)",
       saveNote: "Save note",
+      stickerLabel: "Sticker",
+      themeHeading: "Theme",
+      themeDark: "Dark",
+      themeLight: "Light",
+      themeSky: "Sky",
     },
     tr: {
       title: "Nefes Aurora",
@@ -201,6 +284,8 @@
       navLibrary: "Kütüphane",
       navProfile: "Profil",
       sessionHeading: "Nefes Seansı",
+      cyclesLabel: "Tur sayısı",
+      totalTime: "Toplam süre",
       techniqueLabel: "Teknik",
       roundsLabel: "Turlar / Döngüler",
       sessionTypeLabel: "Seans tipi",
@@ -217,9 +302,20 @@
       guidedBreath: "Rehberli Nefes",
       breathStyle: "Nefes tarzı",
       todayMinutes: "Bugünkü dakika",
+      ready: "Hazır",
+      tapBegin: "Başlamak için dokun",
+      tapPause: "Duraklatmak için dokun",
+      tapResume: "Devam etmek için dokun",
+      paused: "Duraklatıldı",
+      howTo: "Nasıl yapılır",
+      whyItWorks: "Neden işe yarar",
+      caution: "Uyarı",
+      chooseTechnique: "Teknik seç",
+      chooseTechniqueSub: "Detay görmek için kütüphaneden bir teknik seçin.",
       libraryHeading: "Teknik Kütüphanesi",
       libraryIntro:
         "Kısa ve net açıklamalar. Önce yumuşak pratiklerle başlayın. Yoğun teknikleri sorumlulukla uygulayın.",
+      libraryUse: "Bu tekniği kullan",
       statsHeading: "İstatistikler ve Seri",
       currentStreak: "Günlük seri",
       bestStreak: "En iyi seri",
@@ -228,13 +324,25 @@
       badgesHeading: "Rozetler",
       noteHeading: "Günlük Not (yerel)",
       saveNote: "Notu kaydet",
+      stickerLabel: "Sticker",
+      themeHeading: "Tema",
+      themeDark: "Karanlık",
+      themeLight: "Aydınlık",
+      themeSky: "Gökyüzü",
     },
   };
+
+  const THEME_KEY = "breathAurora_theme";
 
   const STORAGE_KEY = "breathAuroraProfiles";
   const SOUND_PREF_KEY = "breathAurora_soundEnabled";
   const LANG_KEY = "breathAurora_lang";
   const ACTIVE_PROFILE_KEY = "breathAurora_activeProfileId";
+
+  function t(key, fallback = "") {
+    const dict = translations[currentLocale] || translations.en;
+    return dict[key] || translations.en[key] || fallback || key;
+  }
 
   let setActiveView = () => {};
   let currentView = "coach";
@@ -313,8 +421,10 @@
         color: "teal",
         accent: "yellow",
         shape: "circle",
+        sticker: "none",
       };
     }
+    if (!profile.avatar.sticker) profile.avatar.sticker = "none";
     return profile;
   }
 
@@ -535,11 +645,18 @@
   const coachTechSummary = document.getElementById("coachTechSummary");
   const coachTechWhy = document.getElementById("coachTechWhy");
   let currentTechnique = null;
+  let currentCycles = 5;
+  const cyclesMinus = document.getElementById("cyclesMinus");
+  const cyclesPlus = document.getElementById("cyclesPlus");
+  const cyclesValue = document.getElementById("cyclesValue");
+  const totalTimeValue = document.getElementById("totalTimeValue");
   const avatarShapeEl = document.getElementById("avatarShape");
   const avatarInnerEl = document.getElementById("avatarInner");
+  const avatarStickerEl = document.getElementById("avatarSticker");
   const colorSwatches = document.querySelectorAll(".avatar-color-swatch");
   const accentSwatches = document.querySelectorAll(".avatar-accent-swatch");
   const shapeButtons = document.querySelectorAll(".avatar-shape-btn");
+  const stickerButtons = document.querySelectorAll(".avatar-sticker-btn");
 
   let currentLocale = localStorage.getItem(LANG_KEY) || "en";
 
@@ -549,8 +666,16 @@
     root.style.setProperty("--progress", String(clamped * 100));
   }
 
-  function applyTheme(typeId) {
-    const type = SESSION_TYPES[typeId] || SESSION_TYPES.calm;
+  function applyTheme(theme) {
+    const validThemes = ["dark", "light", "sky"];
+    if (validThemes.includes(theme)) {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem(THEME_KEY, theme);
+      highlightThemeButtons(theme);
+      return;
+    }
+
+    const type = SESSION_TYPES[theme] || SESSION_TYPES.calm;
     const root = document.documentElement;
     const circle = breathCircle;
     const phase = sessionEngine.phases[sessionEngine.phaseIndex]?.type || "idle";
@@ -558,12 +683,25 @@
     const colorForPhase = colors[phase] || colors.inhale;
     root.style.setProperty("--phase-color", colorForPhase);
     root.style.setProperty("--phase-shadow", hexToRgba(colorForPhase, 0.35));
-    root.style.setProperty("--bg-gradient", colors.background);
     if (circle) {
-      circle.dataset.sessionType = typeId;
+      circle.dataset.sessionType = theme;
       circle.dataset.phase = phase;
       circle.style.transitionTimingFunction = type.easing || "ease-in-out";
     }
+  }
+
+  function highlightThemeButtons(theme) {
+    document.querySelectorAll("[data-theme-select]").forEach((btn) => {
+      btn.classList.toggle("theme-pill--active", btn.dataset.themeSelect === theme);
+    });
+  }
+
+  function initTheme() {
+    const saved = localStorage.getItem(THEME_KEY) || "dark";
+    applyTheme(saved);
+    document.querySelectorAll("[data-theme-select]").forEach((btn) => {
+      btn.addEventListener("click", () => applyTheme(btn.dataset.themeSelect));
+    });
   }
 
   function hexToRgba(hex, alpha) {
@@ -575,26 +713,37 @@
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   }
 
-  function patternCycleSeconds(pattern) {
-    return (
-      (pattern.inhale || 0) +
-      (pattern.hold || 0) +
-      (pattern.exhale || 0) +
-      (pattern.holdEmpty || 0)
-    );
+  function getCycleDurationSeconds(pattern) {
+    if (!pattern) return 0;
+    const inhale = pattern.inhale || 0;
+    const hold = pattern.hold || pattern.holdFull || 0;
+    const exhale = pattern.exhale || 0;
+    const rest = pattern.rest || pattern.holdEmpty || 0;
+    return inhale + hold + exhale + rest;
   }
 
-  function buildPhases(pattern, minutes) {
-    const totalSeconds = Math.max(1, minutes * 60);
-    const singleCycle = patternCycleSeconds(pattern) || 1;
-    const cycles = Math.max(1, Math.ceil(totalSeconds / singleCycle));
+  function getTotalDurationSeconds(pattern, cycles) {
+    return getCycleDurationSeconds(pattern) * (cycles || 0);
+  }
+
+  function formatDuration(seconds) {
+    const s = Math.round(seconds);
+    const minutes = Math.floor(s / 60);
+    const rem = s % 60;
+    if (minutes === 0) return `${rem}s`;
+    if (rem === 0) return `${minutes} min`;
+    return `${minutes} min ${rem}s`;
+  }
+
+  function buildPhases(pattern, cycles) {
+    const totalCycles = Math.max(1, cycles || 1);
     const phases = [];
-    for (let i = 0; i < cycles; i++) {
-      phases.push({ label: "Inhale", type: "inhale", duration: pattern.inhale || 0 });
-      if (pattern.hold) phases.push({ label: "Hold", type: "hold", duration: pattern.hold });
-      phases.push({ label: "Exhale", type: "exhale", duration: pattern.exhale || 0 });
-      if (pattern.holdEmpty)
-        phases.push({ label: "Hold", type: "hold", duration: pattern.holdEmpty });
+    for (let i = 0; i < totalCycles; i++) {
+      phases.push({ label: t("inhaleLabel", "Inhale"), type: "inhale", duration: pattern.inhale || 0 });
+      if (pattern.hold) phases.push({ label: t("holdLabel", "Hold"), type: "hold", duration: pattern.hold });
+      phases.push({ label: t("exhaleLabel", "Exhale"), type: "exhale", duration: pattern.exhale || 0 });
+      const rest = pattern.rest || pattern.holdEmpty || 0;
+      if (rest) phases.push({ label: t("restLabel", "Rest"), type: "hold", duration: rest });
     }
     return phases.filter((p) => p.duration > 0);
   }
@@ -602,12 +751,12 @@
   function updateCoreButtonUI() {
     if (!breathCoreButton) return;
     breathCoreButton.classList.remove("is-paused", "is-running");
-    const readyLabel = currentLocale === "tr" ? "Hazır" : "Ready";
-    const readySub = currentLocale === "tr" ? "Başlamak için dokun" : "Tap to begin";
-    const countdownSub = currentLocale === "tr" ? "Hazırlan" : "Get ready";
-    const pausedLabel = currentLocale === "tr" ? "Duraklatıldı" : "Paused";
-    const pausedSub = currentLocale === "tr" ? "Devam etmek için dokun" : "Tap to resume";
-    const pauseHint = currentLocale === "tr" ? "Duraklatmak için dokun" : "Tap to pause";
+    const readyLabel = t("ready", "Ready");
+    const readySub = t("tapBegin", "Tap to begin");
+    const countdownSub = t("countdown", "Get ready");
+    const pausedLabel = t("paused", "Paused");
+    const pausedSub = t("tapResume", "Tap to resume");
+    const pauseHint = t("tapPause", "Tap to pause");
 
     if (sessionState === "idle" || sessionState === "finished") {
       breathCoreLabel.textContent = readyLabel;
@@ -678,9 +827,10 @@
 
   function beginBreathing() {
     const type = SESSION_TYPES[sessionEngine.sessionType] || SESSION_TYPES.calm;
-    const minutes = Number($("#roundsInput").value) || type.durationMinutes;
+    const cyclesInput = Number($("#roundsInput").value) || currentCycles || type.defaultCycles || 5;
+    currentCycles = Math.max(1, Math.min(30, cyclesInput));
     sessionEngine.pattern = { ...type.pattern };
-    sessionEngine.phases = buildPhases(sessionEngine.pattern, minutes);
+    sessionEngine.phases = buildPhases(sessionEngine.pattern, currentCycles);
     sessionEngine.phaseIndex = 0;
     sessionEngine.sessionDurationMs =
       sessionEngine.phases.reduce((sum, p) => sum + p.duration, 0) * 1000;
@@ -797,10 +947,13 @@
 
   function renderCoachTechniqueInfo() {
     if (!currentTechnique) {
-      if (coachTechTitle) coachTechTitle.textContent = "Choose a technique";
+      if (coachTechTitle) coachTechTitle.textContent = t("chooseTechnique", "Choose a technique");
       if (coachTechPattern) coachTechPattern.textContent = "";
       if (coachTechSummary)
-        coachTechSummary.textContent = "Pick a session type or a technique from the library to see details.";
+        coachTechSummary.textContent = t(
+          "chooseTechniqueSub",
+          "Pick a session type or a technique from the library to see details."
+        );
       if (coachTechWhy) coachTechWhy.textContent = "";
       return;
     }
@@ -809,19 +962,25 @@
     const inhale = pat.inhale ?? "-";
     const hold = (pat.hold ?? pat.holdFull ?? 0) || 0;
     const exhale = pat.exhale ?? "-";
+    const rest = pat.rest || pat.holdEmpty || 0;
 
     if (coachTechTitle) coachTechTitle.textContent = currentTechnique.label || currentTechnique.name || "Custom Session";
     if (coachTechPattern)
-      coachTechPattern.textContent = `Pattern: Inhale ${inhale}s · ${hold ? `Hold ${hold}s · ` : ""}Exhale ${exhale}s`;
-    if (coachTechSummary) coachTechSummary.textContent = currentTechnique.summary || "";
-    if (coachTechWhy) coachTechWhy.textContent = currentTechnique.whyItWorks || "";
+      coachTechPattern.textContent = `Pattern: Inhale ${inhale}s · ${hold ? `Hold ${hold}s · ` : ""}Exhale ${exhale}s${rest ? ` · Rest ${rest}s` : ""}`;
+    const summaryText = currentLocale === "tr" ? currentTechnique.summaryTr || currentTechnique.summary : currentTechnique.summary;
+    const whyText = currentLocale === "tr" ? currentTechnique.whyTr || currentTechnique.whyItWorks : currentTechnique.whyItWorks;
+    if (coachTechSummary) coachTechSummary.textContent = summaryText || "";
+    if (coachTechWhy) coachTechWhy.textContent = whyText || "";
   }
 
   function useTechnique(techMeta) {
     if (!techMeta) return;
     currentTechnique = techMeta;
-    $("#breathStyleLabel").textContent = techMeta.summary || "";
-    $("#techniqueShort").textContent = techMeta.summary || "";
+    currentCycles = techMeta.defaultCycles || currentCycles || 5;
+    $("#breathStyleLabel").textContent =
+      currentLocale === "tr" ? techMeta.summaryTr || techMeta.summary || "" : techMeta.summary || "";
+    $("#techniqueShort").textContent =
+      currentLocale === "tr" ? techMeta.summaryTr || techMeta.summary || "" : techMeta.summary || "";
     const tagsContainer = $("#techniqueTags");
     tagsContainer.innerHTML = "";
     [techMeta.level, techMeta.sessionType].forEach((tag) => {
@@ -836,7 +995,7 @@
       chip.classList.toggle("chip-active", chip.getAttribute("data-intent") === techMeta.sessionType);
     });
     applyTheme(sessionEngine.sessionType);
-    updateEstimatedTime();
+    updateSessionMeta();
     renderCoachTechniqueInfo();
   }
 
@@ -859,41 +1018,50 @@
     useTechnique(tech);
   }
 
+  function updateSessionMeta() {
+    if (!currentTechnique) return;
+    const pattern = currentTechnique.pattern || {};
+    const totalSeconds = getTotalDurationSeconds(pattern, currentCycles);
+    if (cyclesValue) cyclesValue.textContent = currentCycles;
+    if (totalTimeValue) totalTimeValue.textContent = `~${formatDuration(totalSeconds)}`;
+    const roundsInput = $("#roundsInput");
+    if (roundsInput) roundsInput.value = currentCycles;
+    $("#estimatedTime").textContent = `${t("totalTime", "Total time")}: ${formatDuration(totalSeconds)}`;
+  }
+
   function updateEstimatedTime() {
-    const type = SESSION_TYPES[sessionEngine.sessionType];
-    const minutes = Number($("#roundsInput").value) || type.durationMinutes;
-    const pattern = sessionEngine.pattern || type.pattern;
-    const cycleSeconds = patternCycleSeconds(pattern);
-    const cycles = Math.ceil((minutes * 60) / cycleSeconds);
-    const estText = minutes < 1 ? `${Math.round(minutes * 60)} sec` : `${minutes.toFixed(1)} min`;
-    $("#estimatedTime").textContent = `Estimated duration: ${estText} (${cycles} cycles)`;
+    updateSessionMeta();
   }
 
   function initLibrary() {
     const container = $("#techLibrary");
     const detail = $("#libraryDetail");
     container.innerHTML = "";
-    BREATH_LIBRARY.forEach((t) => {
+    BREATH_LIBRARY.forEach((tech) => {
+      const summaryText = currentLocale === "tr" ? tech.summaryTr || tech.summary : tech.summary;
       const card = document.createElement("div");
       card.className = "card";
-      const tags = `<div class="chip-row small"><span class="chip">${t.level}</span><span class="chip">${t.sessionType}</span></div>`;
+      const tags = `<div class="chip-row small"><span class="chip">${tech.level}</span><span class="chip">${tech.sessionType}</span></div>`;
       card.innerHTML = `
         <div class="library-card-title">
-          <h3>${t.label}</h3>
-          <span class="chip chip-primary">${t.level}</span>
+          <h3>${tech.label}</h3>
+          <span class="chip chip-primary">${tech.level}</span>
         </div>
-        <p class="small text-muted">${t.summary}</p>
-        <p class="small text-muted"><strong>Pattern:</strong> inhale ${t.pattern.inhale || 0} · hold ${t.pattern.hold || 0} · exhale ${t.pattern.exhale || 0}${t.pattern.holdEmpty ? ` · hold ${t.pattern.holdEmpty}` : ""}</p>
+        <p class="small text-muted">${summaryText}</p>
+        <p class="small text-muted"><strong>Pattern:</strong> inhale ${tech.pattern.inhale || 0} · hold ${tech.pattern.hold || 0} · exhale ${tech.pattern.exhale || 0}${tech.pattern.holdEmpty ? ` · hold ${tech.pattern.holdEmpty}` : ""}</p>
         ${tags}
         <div class="library-card-action">
-          <button class="btn btn-soft btn-small" data-view-detail="${t.id}">Details</button>
-          <button class="btn btn-primary btn-small" data-start-tech="${t.id}">Start</button>
+          <button class="btn btn-soft btn-small" data-view-detail="${tech.id}">Details</button>
+          <button class="btn btn-primary btn-small" data-start-tech="${tech.id}">${t(
+            "libraryUse",
+            "Use this technique"
+          )}</button>
         </div>
       `;
       container.appendChild(card);
     });
 
-    container.addEventListener("click", (e) => {
+    container.onclick = (e) => {
       const detailId = e.target.getAttribute("data-view-detail");
       const startId = e.target.getAttribute("data-start-tech");
       if (detailId) {
@@ -914,6 +1082,10 @@
     const tech = BREATH_LIBRARY.find((t) => t.id === id);
     const detail = $("#libraryDetail");
     if (!tech || !detail) return;
+    const summaryText = currentLocale === "tr" ? tech.summaryTr || tech.summary : tech.summary;
+    const howToSteps = currentLocale === "tr" ? tech.howToTr || tech.howTo : tech.howTo;
+    const whyText = currentLocale === "tr" ? tech.whyTr || tech.whyItWorks : tech.whyItWorks;
+    const cautionText = currentLocale === "tr" ? tech.cautionsTr || tech.cautions : tech.cautions;
     detail.innerHTML = `
       <h3>${tech.label}</h3>
       <div class="detail-meta">
@@ -921,13 +1093,13 @@
         <span>${tech.sessionType}</span>
         <span>${tech.pattern.inhale || 0}/${tech.pattern.hold || 0}/${tech.pattern.exhale || 0}${tech.pattern.holdEmpty ? `/${tech.pattern.holdEmpty}` : ""}</span>
       </div>
-      <p>${tech.summary}</p>
-      <h4>How to practice</h4>
-      <ul>${tech.howTo.map((step) => `<li>${step}</li>`).join("")}</ul>
-      <h4>Why it works</h4>
-      <p>${tech.whyItWorks}</p>
-      <p class="text-muted small"><strong>Caution:</strong> ${tech.cautions}</p>
-      <button class="btn btn-primary" data-start-tech="${tech.id}">Start this technique</button>
+      <p>${summaryText}</p>
+      <h4>${t("howTo", "How to practice")}</h4>
+      <ul>${(howToSteps || []).map((step) => `<li>${step}</li>`).join("")}</ul>
+      <h4>${t("whyItWorks", "Why it works")}</h4>
+      <p>${whyText || ""}</p>
+      <p class="text-muted small"><strong>${t("caution", "Caution")}: </strong> ${cautionText || ""}</p>
+      <button class="btn btn-primary" data-start-tech="${tech.id}">${t("libraryUse", "Use this technique")}</button>
     `;
     detail.querySelector("button[data-start-tech]").addEventListener("click", () =>
       startFromLibrary(tech.id)
@@ -938,9 +1110,11 @@
     const tech = BREATH_LIBRARY.find((t) => t.id === id);
     if (!tech) return;
     $("#techniqueSelect").value = tech.id;
-    $("#roundsInput").value = SESSION_TYPES[tech.sessionType].durationMinutes;
+    currentCycles = tech.defaultCycles || currentCycles;
+    $("#roundsInput").value = currentCycles;
     useTechnique(tech);
     setActiveView("coach");
+    updateSessionMeta();
     resetToReady();
   }
 
@@ -1006,7 +1180,7 @@
     if (!profile) return;
     ensureAvatarDefaults(profile);
 
-    const { color, accent, shape } = profile.avatar;
+    const { color, accent, shape, sticker } = profile.avatar;
 
     if (avatarShapeEl) avatarShapeEl.dataset.shape = shape;
 
@@ -1022,6 +1196,12 @@
       lime: "#84cc16",
       sky: "#0ea5e9",
     };
+    const stickerMap = {
+      none: "",
+      lungs: "🫁",
+      heart: "❤️",
+      bird: "🐦",
+    };
 
     const baseColor = colorMap[color] || "#38bdf8";
     const accentColor = accentMap[accent] || "#facc15";
@@ -1031,9 +1211,61 @@
       avatarInnerEl.style.boxShadow = `0 0 24px ${baseColor}80`;
     }
 
+    if (avatarStickerEl) {
+      avatarStickerEl.textContent = stickerMap[sticker] || "";
+    }
+
     colorSwatches.forEach((s) => s.classList.toggle("is-active", s.dataset.color === color));
     accentSwatches.forEach((s) => s.classList.toggle("is-active", s.dataset.accent === accent));
     shapeButtons.forEach((btn) => btn.classList.toggle("avatar-shape-btn--active", btn.dataset.shape === shape));
+    stickerButtons.forEach((btn) => btn.classList.toggle("active", btn.dataset.sticker === sticker));
+
+    renderHeaderProfileMini();
+  }
+
+  function renderHeaderProfileMini() {
+    const container = document.getElementById("headerProfileSummary");
+    const profile = getCurrentProfile();
+    if (!container || !profile) return;
+    ensureAvatarDefaults(profile);
+    const { color, accent, sticker } = profile.avatar;
+
+    const colorMap = {
+      teal: "#14b8a6",
+      blue: "#3b82f6",
+      purple: "#a855f7",
+      amber: "#f59e0b",
+    };
+    const accentMap = {
+      yellow: "#facc15",
+      pink: "#ec4899",
+      lime: "#84cc16",
+      sky: "#0ea5e9",
+    };
+    const stickerMap = {
+      none: "",
+      lungs: "🫁",
+      heart: "❤️",
+      bird: "🐦",
+    };
+
+    const baseColor = colorMap[color] || "#38bdf8";
+    const accentColor = accentMap[accent] || "#facc15";
+    const stickerChar = stickerMap[sticker] || "";
+
+    container.innerHTML = `
+      <div class="header-profile-mini">
+        <div class="header-profile-mini-avatar">
+          <div class="header-profile-mini-avatar-inner" style="background: radial-gradient(circle at top, ${accentColor}, ${baseColor});"></div>
+          <div class="header-profile-mini-sticker">${stickerChar}</div>
+        </div>
+        <div class="header-profile-mini-name">${profile.name}</div>
+      </div>
+    `;
+
+    container.querySelector(".header-profile-mini").addEventListener("click", () => {
+      setActiveView("profile");
+    });
   }
 
   function applyLocale(lang) {
@@ -1046,6 +1278,9 @@
     });
     resetToReady();
     refreshTechniqueInfo();
+    initLibrary();
+    updateSessionMeta();
+    renderHeaderProfileMini();
   }
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -1086,14 +1321,24 @@
       currentProfileId = savedProfileId;
     }
 
+    if (!currentProfileId) {
+      currentProfileId = Object.keys(profiles)[0];
+    }
+
     initTechniqueSelect();
     initLibrary();
     initProfilesUI();
+    setCurrentProfile(currentProfileId);
+    initTheme();
     applyTheme(sessionEngine.sessionType);
     applyLocale(currentLocale);
     setActiveView("coach");
 
-    $("#roundsInput").addEventListener("input", updateEstimatedTime);
+    $("#roundsInput").addEventListener("input", (e) => {
+      const val = Math.max(1, Math.min(30, Number(e.target.value) || 1));
+      currentCycles = val;
+      updateSessionMeta();
+    });
     $("#techniqueSelect").addEventListener("change", refreshTechniqueInfo);
 
     $$(".chip-toggle").forEach((chip) => {
@@ -1103,10 +1348,28 @@
         sessionEngine.sessionType = chip.getAttribute("data-intent");
         sessionEngine.pattern = { ...SESSION_TYPES[sessionEngine.sessionType].pattern };
         applyTheme(sessionEngine.sessionType);
-        updateEstimatedTime();
+        updateSessionMeta();
         renderCoachTechniqueInfo();
       });
     });
+
+    if (cyclesMinus) {
+      cyclesMinus.addEventListener("click", () => {
+        if (currentCycles > 1) {
+          currentCycles -= 1;
+          updateSessionMeta();
+        }
+      });
+    }
+
+    if (cyclesPlus) {
+      cyclesPlus.addEventListener("click", () => {
+        if (currentCycles < 30) {
+          currentCycles += 1;
+          updateSessionMeta();
+        }
+      });
+    }
 
     $("#startBtn").addEventListener("click", () => startCountdown());
     $("#stopBtn").addEventListener("click", () => stopSession(false));
@@ -1119,7 +1382,7 @@
       } else if (sessionState === "paused") {
         resumeSession();
       }
-    });
+    };
 
     soundToggle.addEventListener("change", () => {
       soundEnabled = soundToggle.checked;
@@ -1169,6 +1432,17 @@
         if (!profile) return;
         ensureAvatarDefaults(profile);
         profile.avatar.shape = btn.dataset.shape;
+        saveProfiles(profiles);
+        renderAvatar();
+      });
+    });
+
+    stickerButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const profile = getCurrentProfile();
+        if (!profile) return;
+        ensureAvatarDefaults(profile);
+        profile.avatar.sticker = btn.dataset.sticker;
         saveProfiles(profiles);
         renderAvatar();
       });
