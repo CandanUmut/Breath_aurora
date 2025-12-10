@@ -17,6 +17,8 @@
         </div>
       </div>
 
+      <div class="app-header-summary" id="headerProfileSummary"></div>
+
       <div class="app-profile-switcher">
         <label for="profileSelect" class="label-small" data-i18n="profileLabel">Profile</label>
         <div class="profile-select-row">
@@ -130,6 +132,21 @@
                 <span class="dot dot-hold"></span> Hold
                 <span class="dot dot-exhale"></span> Exhale
               </div>
+
+              <div class="session-meta card">
+                <div class="session-meta-row">
+                  <span class="helper-label" data-i18n="cyclesLabel">Cycles</span>
+                  <div class="session-cycles-control">
+                    <button type="button" id="cyclesMinus" class="btn btn-soft btn-small">–</button>
+                    <span id="cyclesValue" class="session-cycles-value">5</span>
+                    <button type="button" id="cyclesPlus" class="btn btn-soft btn-small">+</button>
+                  </div>
+                </div>
+                <div class="session-meta-row">
+                  <span class="helper-label" data-i18n="totalTime">Total time</span>
+                  <span id="totalTimeValue" class="helper-value">~0 min</span>
+                </div>
+              </div>
             </div>
           </div>
           <section class="coach-info card">
@@ -197,6 +214,7 @@
             <div class="avatar-preview">
               <div class="avatar-shape" id="avatarShape" data-shape="circle">
                 <div class="avatar-inner" id="avatarInner"></div>
+                <div class="avatar-sticker" id="avatarSticker"></div>
               </div>
             </div>
 
@@ -229,6 +247,25 @@
                   <button type="button" class="avatar-shape-btn" data-shape="hex">Hex</button>
                 </div>
               </div>
+
+              <div class="avatar-control-group">
+                <label data-i18n="stickerLabel">Sticker</label>
+                <div class="avatar-sticker-row">
+                  <button type="button" class="avatar-sticker-btn" data-sticker="none">Ø</button>
+                  <button type="button" class="avatar-sticker-btn" data-sticker="lungs">🫁</button>
+                  <button type="button" class="avatar-sticker-btn" data-sticker="heart">❤️</button>
+                  <button type="button" class="avatar-sticker-btn" data-sticker="bird">🐦</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="section-title" data-i18n="themeHeading">Theme</h3>
+            <div class="theme-options">
+              <button type="button" class="theme-pill" data-theme-select="dark" data-i18n="themeDark">Dark</button>
+              <button type="button" class="theme-pill" data-theme-select="light" data-i18n="themeLight">Light</button>
+              <button type="button" class="theme-pill" data-theme-select="sky" data-i18n="themeSky">Sky</button>
             </div>
           </div>
 
