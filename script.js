@@ -71,6 +71,10 @@
       summary:
         "Slow nasal breathing at about 5 breaths per minute to calm the nervous system.",
       summaryTr: "Sinir sistemini sakinleştirmek için dakikada ~5 nefeslik nazal ritim.",
+      coachText:
+        "Steady, calming breaths that are ideal when you feel wired or want to settle before meditation or sleep.",
+      coachTextTr:
+        "Kendinizi gergin hissettiğinizde, meditasyon ya da uyku öncesi yumuşamak için ideal sakin ritim.",
       howTo: [
         "Sit or lie down comfortably.",
         "Inhale through your nose for 5 seconds, letting your belly rise.",
@@ -96,6 +100,10 @@
       summary:
         "A simple 4-count inhale, hold, exhale, hold cycle used by Navy SEALs to stay calm and focused.",
       summaryTr: "Sakin ve odaklı kalmak için 4 sayıda alma, tutma, verme ve boşta tutma döngüsü.",
+      coachText:
+        "Great for focus between tasks or before speaking. Use when you need a clear, steady mind without getting sleepy.",
+      coachTextTr:
+        "Görev aralarında veya konuşma öncesinde odak için harika. Uykulu hissetmeden net ve sakin kalmak istediğinizde kullanın.",
       howTo: [
         "Inhale through your nose for 4 counts.",
         "Hold your breath with lungs full for 4 counts.",
@@ -121,6 +129,9 @@
       summary:
         "A longer exhale pattern that helps switch your body into rest-and-digest mode for sleep.",
       summaryTr: "Vücudu uyku moduna geçirmek için uzun verişe sahip rahatlatıcı ritim.",
+      coachText: "Evening-friendly rhythm to downshift after screens or late meals; use in bed or pre-sleep wind down.",
+      coachTextTr:
+        "Ekran veya geç yemek sonrası yavaşlamak için akşam uyumlu ritim; yatakta veya uyku öncesi gevşemede kullanın.",
       howTo: [
         "Inhale quietly through your nose for 4 counts.",
         "Hold your breath for 7 counts.",
@@ -146,6 +157,9 @@
       summary:
         "A gentle humming exhale that soothes the nervous system and quiets the mind.",
       summaryTr: "Sinir sistemini yumuşatan hafif uğultulu veriş.",
+      coachText: "Perfect mini-reset during anxious moments; the vibration softens jaw tension and lowers stress quickly.",
+      coachTextTr:
+        "Kaygılı anlarda hızlı mini mola; titreşim çene gerginliğini yumuşatır ve stresi çabuk düşürür.",
       howTo: [
         "Inhale slowly through your nose.",
         "Exhale while making a soft 'mmm' humming sound, like a bee.",
@@ -169,6 +183,10 @@
       level: "Beginner",
       summary: "Short inhales and longer exhales to gently wake up and boost alertness.",
       summaryTr: "Kısa alış ve uzun verişlerle nazikçe uyanıp dikkati artırma.",
+      coachText:
+        "Use in the morning or mid-day slump when you want energy without jitters; keeps exhales long so the nervous system stays balanced.",
+      coachTextTr:
+        "Titreme yapmadan enerji için sabah veya öğlen düşüşlerinde kullanın; uzun veriş sinir sistemini dengede tutar.",
       howTo: [
         "Sit upright.",
         "Inhale through the nose for 2 counts.",
@@ -190,6 +208,10 @@
       level: "Gentle",
       summary: "Smooth breaths with a brief hold to gently stretch lung tissue and lengthen the exhale.",
       summaryTr: "Akciğerleri nazikçe genişletmek ve verişi uzatmak için kısa tutuşlu akış.",
+      coachText:
+        "Lovely during breaks or recovery days to open the ribs without strain; use when you want soft expansion, not intensity.",
+      coachTextTr:
+        "Molalarda veya dinlenme günlerinde, zorlamadan kaburgaları açmak için ideal; yoğunluk değil yumuşak genişleme istediğinizde kullanın.",
       howTo: [
         "Inhale through the nose for 3 counts, expanding ribs.",
         "Hold lightly for 3 counts without strain.",
@@ -209,6 +231,10 @@
       level: "Intermediate",
       summary: "A balanced inhale and hold with twice-as-long exhale for deeper capacity training.",
       summaryTr: "Daha derin kapasite için dengeli alış ve tutuş, iki kat uzun veriş.",
+      coachText:
+        "Use when you want to build tolerance and focus, like after a workout cool-down or to prepare for singing/speaking.",
+      coachTextTr:
+        "Antrenman sonrası soğuma ya da şarkı/konuşma öncesi tolerans ve odak geliştirmek istediğinizde kullanın.",
       howTo: [
         "Inhale steadily for 4 counts, filling low ribs first.",
         "Hold gently for 4 without clenching the throat.",
@@ -252,6 +278,10 @@
       tapBegin: "Tap to begin",
       tapPause: "Tap to pause",
       tapResume: "Tap to resume",
+      countdown: "Get ready",
+      btnReady: "Ready",
+      btnPause: "Pause",
+      btnResume: "Resume",
       paused: "Paused",
       howTo: "How to practice",
       whyItWorks: "Why it works",
@@ -275,6 +305,15 @@
       themeDark: "Dark",
       themeLight: "Light",
       themeSky: "Sky",
+      sessionSummary: "Session plan",
+      cycleTotalLabel: "Cycles · Total",
+      libraryDetails: "Details",
+      coachAbout: "When to use",
+      patternLabel: "Pattern",
+      inhaleLabel: "Inhale",
+      holdLabel: "Hold",
+      exhaleLabel: "Exhale",
+      restLabel: "Rest",
     },
     tr: {
       title: "Nefes Aurora",
@@ -306,6 +345,10 @@
       tapBegin: "Başlamak için dokun",
       tapPause: "Duraklatmak için dokun",
       tapResume: "Devam etmek için dokun",
+      countdown: "Hazırlan",
+      btnReady: "Hazırım",
+      btnPause: "Duraklat",
+      btnResume: "Devam",
       paused: "Duraklatıldı",
       howTo: "Nasıl yapılır",
       whyItWorks: "Neden işe yarar",
@@ -329,6 +372,15 @@
       themeDark: "Karanlık",
       themeLight: "Aydınlık",
       themeSky: "Gökyüzü",
+      sessionSummary: "Seans planı",
+      cycleTotalLabel: "Turlar · Toplam",
+      libraryDetails: "Detaylar",
+      coachAbout: "Ne zaman kullanılır",
+      patternLabel: "Ritim",
+      inhaleLabel: "Alış",
+      holdLabel: "Tutuş",
+      exhaleLabel: "Veriş",
+      restLabel: "Bekle",
     },
   };
 
@@ -338,6 +390,7 @@
   const SOUND_PREF_KEY = "breathAurora_soundEnabled";
   const LANG_KEY = "breathAurora_lang";
   const ACTIVE_PROFILE_KEY = "breathAurora_activeProfileId";
+  const PROFILE_ID_KEY = "breathAppProfileId";
 
   function t(key, fallback = "") {
     const dict = translations[currentLocale] || translations.en;
@@ -493,6 +546,7 @@
     if (!profiles[profileId]) return;
     currentProfileId = profileId;
     localStorage.setItem(ACTIVE_PROFILE_KEY, profileId);
+    localStorage.setItem(PROFILE_ID_KEY, profileId);
     const sel = $("#profileSelect");
     if (sel) sel.value = profileId;
     $("#profileTagline").textContent = `${profileId}, your breath is your superpower.`;
@@ -751,12 +805,14 @@
   function updateCoreButtonUI() {
     if (!breathCoreButton) return;
     breathCoreButton.classList.remove("is-paused", "is-running");
-    const readyLabel = t("ready", "Ready");
+    const readyLabel = t("btnReady", "Ready", "Hazırım");
     const readySub = t("tapBegin", "Tap to begin");
     const countdownSub = t("countdown", "Get ready");
-    const pausedLabel = t("paused", "Paused");
+    const pausedLabel = t("btnResume", "Resume");
     const pausedSub = t("tapResume", "Tap to resume");
     const pauseHint = t("tapPause", "Tap to pause");
+    const runningLabel = t("btnPause", "Pause");
+    const phaseText = (currentPhase || "").toUpperCase();
 
     if (sessionState === "idle" || sessionState === "finished") {
       breathCoreLabel.textContent = readyLabel;
@@ -765,8 +821,8 @@
       breathCoreLabel.textContent = String(countdownValue || 0);
       breathCoreSub.textContent = countdownSub;
     } else if (sessionState === "running") {
-      breathCoreLabel.textContent = (currentPhase || "").toUpperCase();
-      breathCoreSub.textContent = `${Math.max(0, Math.ceil(remainingSeconds || 0))}s · ${pauseHint}`;
+      breathCoreLabel.textContent = runningLabel;
+      breathCoreSub.textContent = `${phaseText || ""} · ${Math.max(0, Math.ceil(remainingSeconds || 0))}s · ${pauseHint}`;
       breathCoreButton.classList.add("is-running");
     } else if (sessionState === "paused") {
       breathCoreLabel.textContent = pausedLabel;
@@ -966,11 +1022,29 @@
 
     if (coachTechTitle) coachTechTitle.textContent = currentTechnique.label || currentTechnique.name || "Custom Session";
     if (coachTechPattern)
-      coachTechPattern.textContent = `Pattern: Inhale ${inhale}s · ${hold ? `Hold ${hold}s · ` : ""}Exhale ${exhale}s${rest ? ` · Rest ${rest}s` : ""}`;
+      coachTechPattern.textContent = `${t("patternLabel", "Pattern")}: ${t("inhaleLabel", "Inhale")} ${inhale}s · ${
+        hold ? `${t("holdLabel", "Hold")} ${hold}s · ` : ""
+      }${t("exhaleLabel", "Exhale")} ${exhale}s${rest ? ` · ${t("restLabel", "Rest")} ${rest}s` : ""}`;
     const summaryText = currentLocale === "tr" ? currentTechnique.summaryTr || currentTechnique.summary : currentTechnique.summary;
     const whyText = currentLocale === "tr" ? currentTechnique.whyTr || currentTechnique.whyItWorks : currentTechnique.whyItWorks;
+    const coachUsage =
+      currentLocale === "tr"
+        ? currentTechnique.coachTextTr || currentTechnique.coachText || summaryText
+        : currentTechnique.coachText || currentTechnique.coachTextTr || summaryText;
     if (coachTechSummary) coachTechSummary.textContent = summaryText || "";
-    if (coachTechWhy) coachTechWhy.textContent = whyText || "";
+    if (coachTechWhy) {
+      coachTechWhy.innerHTML = "";
+      const label = document.createElement("strong");
+      label.textContent = `${t("coachAbout", "When to use")}: `;
+      coachTechWhy.appendChild(label);
+      coachTechWhy.append(document.createTextNode(coachUsage || ""));
+      if (whyText) {
+        const extra = document.createElement("div");
+        extra.className = "small text-muted";
+        extra.textContent = whyText;
+        coachTechWhy.appendChild(extra);
+      }
+    }
   }
 
   function useTechnique(techMeta) {
@@ -1024,9 +1098,15 @@
     const totalSeconds = getTotalDurationSeconds(pattern, currentCycles);
     if (cyclesValue) cyclesValue.textContent = currentCycles;
     if (totalTimeValue) totalTimeValue.textContent = `~${formatDuration(totalSeconds)}`;
+    const cycleSummaryValue = $("#cycleSummaryValue");
+    if (cycleSummaryValue) {
+      cycleSummaryValue.textContent = `${currentCycles} · ~${formatDuration(totalSeconds)}`;
+    }
     const roundsInput = $("#roundsInput");
     if (roundsInput) roundsInput.value = currentCycles;
-    $("#estimatedTime").textContent = `${t("totalTime", "Total time")}: ${formatDuration(totalSeconds)}`;
+    $("#estimatedTime").textContent = `${t("cycleTotalLabel", "Cycles · Total")}: ${currentCycles} · ${formatDuration(
+      totalSeconds
+    )}`;
   }
 
   function updateEstimatedTime() {
@@ -1037,33 +1117,53 @@
     const container = $("#techLibrary");
     const detail = $("#libraryDetail");
     container.innerHTML = "";
+
     BREATH_LIBRARY.forEach((tech) => {
       const summaryText = currentLocale === "tr" ? tech.summaryTr || tech.summary : tech.summary;
+
       const card = document.createElement("div");
       card.className = "card";
-      const tags = `<div class="chip-row small"><span class="chip">${tech.level}</span><span class="chip">${tech.sessionType}</span></div>`;
+
+      const pattern = tech.pattern || {};
+
+      const tags = `
+      <div class="chip-row small">
+        <span class="chip">${tech.level}</span>
+        <span class="chip">${tech.sessionType}</span>
+      </div>
+    `;
+
       card.innerHTML = `
-        <div class="library-card-title">
-          <h3>${tech.label}</h3>
-          <span class="chip chip-primary">${tech.level}</span>
-        </div>
-        <p class="small text-muted">${summaryText}</p>
-        <p class="small text-muted"><strong>Pattern:</strong> inhale ${tech.pattern.inhale || 0} · hold ${tech.pattern.hold || 0} · exhale ${tech.pattern.exhale || 0}${tech.pattern.holdEmpty ? ` · hold ${tech.pattern.holdEmpty}` : ""}</p>
-        ${tags}
-        <div class="library-card-action">
-          <button class="btn btn-soft btn-small" data-view-detail="${tech.id}">Details</button>
-          <button class="btn btn-primary btn-small" data-start-tech="${tech.id}">${t(
-            "libraryUse",
-            "Use this technique"
-          )}</button>
-        </div>
-      `;
+      <div class="library-card-title">
+        <h3>${tech.label}</h3>
+        <span class="chip chip-primary">${tech.level}</span>
+      </div>
+      <p class="small text-muted">${summaryText}</p>
+      <p class="small text-muted">
+        <strong>Pattern:</strong>
+        inhale ${pattern.inhale || 0}
+        · hold ${pattern.hold || 0}
+        · exhale ${pattern.exhale || 0}
+        ${pattern.holdEmpty ? " · hold " + pattern.holdEmpty : ""}
+      </p>
+      ${tags}
+      <div class="library-card-action">
+        <button class="btn btn-soft btn-small" data-view-detail="${tech.id}">
+          ${t("libraryDetails", "Details", "Detaylar")}
+        </button>
+        <button class="btn btn-primary btn-small" data-start-tech="${tech.id}">
+          ${t("libraryUse", "Use this technique")}
+        </button>
+      </div>
+    `;
+
       container.appendChild(card);
     });
 
     container.onclick = (e) => {
       const detailId = e.target.getAttribute("data-view-detail");
       const startId = e.target.getAttribute("data-start-tech");
+
       if (detailId) {
         renderDetail(detailId);
         const tech = BREATH_LIBRARY.find((t) => t.id === detailId);
@@ -1072,10 +1172,15 @@
           useTechnique(tech);
         }
       }
-      if (startId) startFromLibrary(startId);
-    });
 
-    renderDetail(BREATH_LIBRARY[0].id);
+      if (startId) {
+        startFromLibrary(startId);
+      }
+    };
+
+    if (BREATH_LIBRARY.length > 0) {
+      renderDetail(BREATH_LIBRARY[0].id);
+    }
   }
 
   function renderDetail(id) {
@@ -1086,12 +1191,16 @@
     const howToSteps = currentLocale === "tr" ? tech.howToTr || tech.howTo : tech.howTo;
     const whyText = currentLocale === "tr" ? tech.whyTr || tech.whyItWorks : tech.whyItWorks;
     const cautionText = currentLocale === "tr" ? tech.cautionsTr || tech.cautions : tech.cautions;
+    const pattern = tech.pattern || {};
+    const patternText = `${pattern.inhale || 0}/${pattern.hold || 0}/${pattern.exhale || 0}${
+      pattern.holdEmpty ? `/${pattern.holdEmpty}` : ""
+    }`;
     detail.innerHTML = `
       <h3>${tech.label}</h3>
       <div class="detail-meta">
         <span>${tech.level}</span>
         <span>${tech.sessionType}</span>
-        <span>${tech.pattern.inhale || 0}/${tech.pattern.hold || 0}/${tech.pattern.exhale || 0}${tech.pattern.holdEmpty ? `/${tech.pattern.holdEmpty}` : ""}</span>
+        <span>${t("patternLabel", "Pattern")}: ${patternText}</span>
       </div>
       <p>${summaryText}</p>
       <h4>${t("howTo", "How to practice")}</h4>
@@ -1293,30 +1402,34 @@
     const navButtons = document.querySelectorAll(".nav-btn[data-view-target]");
 
     setActiveView = (target) => {
-      if (!VIEWS[target]) return;
-      currentView = target;
+      const nextView = VIEWS[target] ? target : "coach";
+      currentView = nextView;
       Object.entries(VIEWS).forEach(([id, el]) => {
         if (!el) return;
-        el.classList.toggle("view--active", id === target);
+        el.classList.toggle("view--active", id === nextView);
       });
 
       navButtons.forEach((btn) => {
-        const isActive = btn.dataset.viewTarget === target;
+        const isActive = btn.dataset.viewTarget === nextView;
         btn.classList.toggle("nav-btn--active", isActive);
       });
+
+      if (nextView === "library") {
+        initLibrary();
+      }
+      if (nextView === "profile") {
+        renderAvatar();
+      }
     };
 
     navButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
         const target = btn.dataset.viewTarget;
         setActiveView(target);
-        if (target === "profile") {
-          renderAvatar();
-        }
       });
     });
 
-    const savedProfileId = localStorage.getItem(ACTIVE_PROFILE_KEY);
+    const savedProfileId = localStorage.getItem(PROFILE_ID_KEY) || localStorage.getItem(ACTIVE_PROFILE_KEY);
     if (savedProfileId && profiles[savedProfileId]) {
       currentProfileId = savedProfileId;
     }
@@ -1382,7 +1495,7 @@
       } else if (sessionState === "paused") {
         resumeSession();
       }
-    };
+    });
 
     soundToggle.addEventListener("change", () => {
       soundEnabled = soundToggle.checked;
