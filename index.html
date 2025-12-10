@@ -24,22 +24,10 @@
           <button id="newProfileBtn" class="btn btn-ghost" title="Create new profile">＋</button>
         </div>
         <div id="profileTagline" class="profile-tagline"></div>
-        <div class="profile-chip" id="profileChip">
-          <div class="chip-avatar" id="profileChipAvatar"></div>
-          <div class="chip-text" id="profileChipName">Guest</div>
-        </div>
       </div>
 
       <div class="lang-toggle" aria-label="Language toggle">
         <button id="langToggle" class="btn btn-soft btn-small" type="button">TR / EN</button>
-      </div>
-
-      <div class="theme-picker" aria-label="Theme toggle">
-        <label class="label-small" for="themeSelect" data-i18n="themeLabel">Theme</label>
-        <div class="theme-row">
-          <select id="themeSelect" class="field-select field-select--compact"></select>
-          <div id="themeSwatches" class="theme-swatch-row"></div>
-        </div>
       </div>
     </header>
 
@@ -214,53 +202,35 @@
 
             <div class="avatar-controls">
               <div class="avatar-control-group">
-                <label data-i18n="primaryColorLabel">Primary color</label>
+                <label>Primary color</label>
                 <div class="avatar-color-row">
                   <button type="button" class="avatar-color-swatch" data-color="teal"></button>
                   <button type="button" class="avatar-color-swatch" data-color="blue"></button>
                   <button type="button" class="avatar-color-swatch" data-color="purple"></button>
                   <button type="button" class="avatar-color-swatch" data-color="amber"></button>
-                  <button type="button" class="avatar-color-swatch" data-color="coral"></button>
-                  <button type="button" class="avatar-color-swatch" data-color="emerald"></button>
                 </div>
               </div>
 
               <div class="avatar-control-group">
-                <label data-i18n="accentColorLabel">Accent color</label>
+                <label>Accent color</label>
                 <div class="avatar-color-row">
                   <button type="button" class="avatar-accent-swatch" data-accent="yellow"></button>
                   <button type="button" class="avatar-accent-swatch" data-accent="pink"></button>
                   <button type="button" class="avatar-accent-swatch" data-accent="lime"></button>
                   <button type="button" class="avatar-accent-swatch" data-accent="sky"></button>
-                  <button type="button" class="avatar-accent-swatch" data-accent="lavender"></button>
                 </div>
               </div>
 
               <div class="avatar-control-group">
-                <label data-i18n="shapeLabel">Shape</label>
+                <label>Shape</label>
                 <div class="avatar-shape-row">
                   <button type="button" class="avatar-shape-btn" data-shape="circle">Circle</button>
                   <button type="button" class="avatar-shape-btn" data-shape="diamond">Diamond</button>
                   <button type="button" class="avatar-shape-btn" data-shape="hex">Hex</button>
-                  <button type="button" class="avatar-shape-btn" data-shape="shield">Shield</button>
-                <button type="button" class="avatar-shape-btn" data-shape="wave">Wave</button>
-                <button type="button" class="avatar-shape-btn" data-shape="star">Star</button>
-              </div>
-            </div>
-
-            <div class="avatar-control-group">
-              <label data-i18n="overlayLabel">Overlay</label>
-              <div class="avatar-overlay-row">
-                <button type="button" class="avatar-overlay-btn" data-overlay="">✕</button>
-                <button type="button" class="avatar-overlay-btn" data-overlay="🐦">🐦</button>
-                <button type="button" class="avatar-overlay-btn" data-overlay="🚗">🚗</button>
-                <button type="button" class="avatar-overlay-btn" data-overlay="🌿">🌿</button>
-                <button type="button" class="avatar-overlay-btn" data-overlay="🌟">🌟</button>
-                <button type="button" class="avatar-overlay-btn" data-overlay="😊">😊</button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
           <div class="card">
             <h2 class="section-title" data-i18n="noteHeading">Daily Note (local only)</h2>
