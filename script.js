@@ -306,6 +306,8 @@
       themeLight: "Light",
       themeSky: "Sky",
       sessionSummary: "Session plan",
+      cyclesShort: "cycles",
+      totalLabel: "total",
       cycleTotalLabel: "Cycles · Total",
       libraryDetails: "Details",
       coachAbout: "When to use",
@@ -314,6 +316,7 @@
       holdLabel: "Hold",
       exhaleLabel: "Exhale",
       restLabel: "Rest",
+      patternMissing: "Pattern missing timing. Please pick another technique.",
     },
     tr: {
       title: "Nefes Aurora",
@@ -373,6 +376,8 @@
       themeLight: "Aydınlık",
       themeSky: "Gökyüzü",
       sessionSummary: "Seans planı",
+      cyclesShort: "çevrim",
+      totalLabel: "toplam",
       cycleTotalLabel: "Turlar · Toplam",
       libraryDetails: "Detaylar",
       coachAbout: "Ne zaman kullanılır",
@@ -381,6 +386,7 @@
       holdLabel: "Tutuş",
       exhaleLabel: "Veriş",
       restLabel: "Bekle",
+      patternMissing: "Ritim eksik. Lütfen başka bir teknik seçin.",
     },
   };
 
@@ -767,13 +773,24 @@
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   }
 
+  function normalizePattern(raw = {}) {
+    // Normalize any alternative keys to the canonical inhale/hold/exhale/holdEmpty structure
+    const safeNumber = (val) => {
+      const n = Number(val);
+      return Number.isFinite(n) ? n : 0;
+    };
+
+    return {
+      inhale: safeNumber(raw.inhale ?? raw.inhaleLong ?? raw.in ?? 0),
+      hold: safeNumber(raw.hold ?? raw.holdFull ?? raw.retention ?? 0),
+      exhale: safeNumber(raw.exhale ?? raw.out ?? raw.exhaleLong ?? 0),
+      holdEmpty: safeNumber(raw.holdEmpty ?? raw.rest ?? raw.emptyHold ?? 0),
+    };
+  }
+
   function getCycleDurationSeconds(pattern) {
-    if (!pattern) return 0;
-    const inhale = pattern.inhale || 0;
-    const hold = pattern.hold || pattern.holdFull || 0;
-    const exhale = pattern.exhale || 0;
-    const rest = pattern.rest || pattern.holdEmpty || 0;
-    return inhale + hold + exhale + rest;
+    const pat = normalizePattern(pattern);
+    return pat.inhale + pat.hold + pat.exhale + pat.holdEmpty;
   }
 
   function getTotalDurationSeconds(pattern, cycles) {
@@ -781,23 +798,23 @@
   }
 
   function formatDuration(seconds) {
-    const s = Math.round(seconds);
+    const s = Math.max(0, Math.round(seconds));
     const minutes = Math.floor(s / 60);
     const rem = s % 60;
     if (minutes === 0) return `${rem}s`;
-    if (rem === 0) return `${minutes} min`;
-    return `${minutes} min ${rem}s`;
+    return `${minutes}:${String(rem).padStart(2, "0")}`;
   }
 
   function buildPhases(pattern, cycles) {
+    const pat = normalizePattern(pattern);
     const totalCycles = Math.max(1, cycles || 1);
     const phases = [];
     for (let i = 0; i < totalCycles; i++) {
-      phases.push({ label: t("inhaleLabel", "Inhale"), type: "inhale", duration: pattern.inhale || 0 });
-      if (pattern.hold) phases.push({ label: t("holdLabel", "Hold"), type: "hold", duration: pattern.hold });
-      phases.push({ label: t("exhaleLabel", "Exhale"), type: "exhale", duration: pattern.exhale || 0 });
-      const rest = pattern.rest || pattern.holdEmpty || 0;
-      if (rest) phases.push({ label: t("restLabel", "Rest"), type: "hold", duration: rest });
+      phases.push({ label: t("inhaleLabel", "Inhale"), type: "inhale", duration: pat.inhale });
+      if (pat.hold) phases.push({ label: t("holdLabel", "Hold"), type: "hold", duration: pat.hold });
+      phases.push({ label: t("exhaleLabel", "Exhale"), type: "exhale", duration: pat.exhale });
+      if (pat.holdEmpty)
+        phases.push({ label: t("restLabel", "Rest"), type: "hold", duration: pat.holdEmpty });
     }
     return phases.filter((p) => p.duration > 0);
   }
@@ -882,11 +899,16 @@
   }
 
   function beginBreathing() {
-    const type = SESSION_TYPES[sessionEngine.sessionType] || SESSION_TYPES.calm;
-    const cyclesInput = Number($("#roundsInput").value) || currentCycles || type.defaultCycles || 5;
+    const cyclesInput = Number($("#roundsInput").value) || currentCycles || 5;
     currentCycles = Math.max(1, Math.min(30, cyclesInput));
-    sessionEngine.pattern = { ...type.pattern };
-    sessionEngine.phases = buildPhases(sessionEngine.pattern, currentCycles);
+    const pattern = normalizePattern(sessionEngine.pattern || {});
+    sessionEngine.pattern = pattern;
+    sessionEngine.phases = buildPhases(pattern, currentCycles);
+    if (sessionEngine.phases.length === 0) {
+      showToast(t("patternMissing", "Pattern missing timing. Please pick another technique."));
+      resetToReady();
+      return;
+    }
     sessionEngine.phaseIndex = 0;
     sessionEngine.sessionDurationMs =
       sessionEngine.phases.reduce((sum, p) => sum + p.duration, 0) * 1000;
@@ -1014,11 +1036,11 @@
       return;
     }
 
-    const pat = currentTechnique.pattern || {};
+    const pat = normalizePattern(currentTechnique.pattern || {});
     const inhale = pat.inhale ?? "-";
-    const hold = (pat.hold ?? pat.holdFull ?? 0) || 0;
+    const hold = pat.hold || 0;
     const exhale = pat.exhale ?? "-";
-    const rest = pat.rest || pat.holdEmpty || 0;
+    const rest = pat.holdEmpty || 0;
 
     if (coachTechTitle) coachTechTitle.textContent = currentTechnique.label || currentTechnique.name || "Custom Session";
     if (coachTechPattern)
@@ -1049,7 +1071,8 @@
 
   function useTechnique(techMeta) {
     if (!techMeta) return;
-    currentTechnique = techMeta;
+    const normalizedPattern = normalizePattern(techMeta.pattern || {});
+    currentTechnique = { ...techMeta, pattern: normalizedPattern };
     currentCycles = techMeta.defaultCycles || currentCycles || 5;
     $("#breathStyleLabel").textContent =
       currentLocale === "tr" ? techMeta.summaryTr || techMeta.summary || "" : techMeta.summary || "";
@@ -1064,7 +1087,7 @@
       tagsContainer.appendChild(span);
     });
     sessionEngine.sessionType = techMeta.sessionType;
-    sessionEngine.pattern = { ...techMeta.pattern };
+    sessionEngine.pattern = { ...normalizedPattern };
     $$(".chip-toggle").forEach((chip) => {
       chip.classList.toggle("chip-active", chip.getAttribute("data-intent") === techMeta.sessionType);
     });
@@ -1094,13 +1117,15 @@
 
   function updateSessionMeta() {
     if (!currentTechnique) return;
-    const pattern = currentTechnique.pattern || {};
+    const pattern = normalizePattern(currentTechnique.pattern || {});
     const totalSeconds = getTotalDurationSeconds(pattern, currentCycles);
     if (cyclesValue) cyclesValue.textContent = currentCycles;
     if (totalTimeValue) totalTimeValue.textContent = `~${formatDuration(totalSeconds)}`;
     const cycleSummaryValue = $("#cycleSummaryValue");
     if (cycleSummaryValue) {
-      cycleSummaryValue.textContent = `${currentCycles} · ~${formatDuration(totalSeconds)}`;
+      cycleSummaryValue.textContent = `${currentCycles} ${t("cyclesShort", "cycles")} · ~${formatDuration(
+        totalSeconds
+      )} ${t("totalLabel", "total")}`;
     }
     const roundsInput = $("#roundsInput");
     if (roundsInput) roundsInput.value = currentCycles;
@@ -1124,7 +1149,7 @@
       const card = document.createElement("div");
       card.className = "card";
 
-      const pattern = tech.pattern || {};
+      const pattern = normalizePattern(tech.pattern || {});
 
       const tags = `
       <div class="chip-row small">
@@ -1161,8 +1186,10 @@
     });
 
     container.onclick = (e) => {
-      const detailId = e.target.getAttribute("data-view-detail");
-      const startId = e.target.getAttribute("data-start-tech");
+      const detailBtn = e.target.closest("[data-view-detail]");
+      const startBtn = e.target.closest("[data-start-tech]");
+      const detailId = detailBtn ? detailBtn.getAttribute("data-view-detail") : null;
+      const startId = startBtn ? startBtn.getAttribute("data-start-tech") : null;
 
       if (detailId) {
         renderDetail(detailId);
@@ -1191,7 +1218,7 @@
     const howToSteps = currentLocale === "tr" ? tech.howToTr || tech.howTo : tech.howTo;
     const whyText = currentLocale === "tr" ? tech.whyTr || tech.whyItWorks : tech.whyItWorks;
     const cautionText = currentLocale === "tr" ? tech.cautionsTr || tech.cautions : tech.cautions;
-    const pattern = tech.pattern || {};
+    const pattern = normalizePattern(tech.pattern || {});
     const patternText = `${pattern.inhale || 0}/${pattern.hold || 0}/${pattern.exhale || 0}${
       pattern.holdEmpty ? `/${pattern.holdEmpty}` : ""
     }`;
@@ -1459,10 +1486,16 @@
         $$(".chip-toggle").forEach((c) => c.classList.remove("chip-active"));
         chip.classList.add("chip-active");
         sessionEngine.sessionType = chip.getAttribute("data-intent");
-        sessionEngine.pattern = { ...SESSION_TYPES[sessionEngine.sessionType].pattern };
-        applyTheme(sessionEngine.sessionType);
-        updateSessionMeta();
-        renderCoachTechniqueInfo();
+        const matchedTechnique = BREATH_LIBRARY.find((t) => t.sessionType === sessionEngine.sessionType);
+        if (matchedTechnique) {
+          $("#techniqueSelect").value = matchedTechnique.id;
+          useTechnique(matchedTechnique);
+        } else {
+          sessionEngine.pattern = normalizePattern(SESSION_TYPES[sessionEngine.sessionType].pattern);
+          applyTheme(sessionEngine.sessionType);
+          updateSessionMeta();
+          renderCoachTechniqueInfo();
+        }
       });
     });
 
